@@ -11,8 +11,6 @@ dependencies:
   cupertino_icons:
   hive_flutter:
   uuid:
-  flex_color_scheme: 6.0.1
-  # image_picker:
   file_picker:
   states_rebuilder:
   google_fonts: 

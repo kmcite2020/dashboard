@@ -20,6 +20,6 @@ jobs:
       with:
         allowUpdates: true
         artifacts: "build/app/outputs/apk/release/*.apk"
-        token: ${{ secrets.GITHUB }}
+        token: ${{ secrets.DEVELOPMENT }}
         name: 'URideal'
         tag: Update
