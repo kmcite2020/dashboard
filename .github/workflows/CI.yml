@@ -23,3 +23,6 @@ jobs:
         token: ${{ secrets.DEVELOPMENT }}
         name: 'Dashboard'
         tag: Update
+    - uses: bluefireteam/flutter-gh-pages@v7
+      with:
+        baseHref: ./web/
