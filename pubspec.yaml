@@ -1,7 +1,7 @@
 name: dashboard
 
 description: A new Flutter project.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 version: 1.0.0+1
 environment:
   sdk: '>=2.18.4 <3.0.0'
@@ -12,18 +12,18 @@ dependencies:
   hive_flutter:
   uuid:
   file_picker:
+  material_design_icons_flutter: ^5.0.6996
   states_rebuilder:
   google_fonts: 
   colornames: 
   equatable:
-  shared_preferences: ^2.0.15
+  shared_preferences: 
+  get: ^4.6.5
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
 flutter:
   uses-material-design: true
-
-  # To add assets to your application, add an assets section, like this:
   assets:
     - lib/assets/

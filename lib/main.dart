@@ -2,28 +2,27 @@
 
 import 'dart:async';
 
+import 'package:dashboard/assets/licenses.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
+import 'apps/idealApp/controllers/core.dart';
 import 'core/apps.dart';
 import 'core/storage.dart';
 import 'core/themes.dart';
-import 'idealApp/controllers/core.dart';
-import 'idealApp/ui/dashboard.dart';
-import 'idealApp/ui/products/add_product.dart';
-import 'idealApp/ui/products/products.dart';
-import 'idealApp/ui/settings.dart';
 import 'core/utils.dart';
 
 void main() async {
   await Hive.initFlutter();
   // TODO re-implement database name as there is dependency on internal app
   await Hive.openBox(database);
-  GoogleFonts.config.allowRuntimeFetching = true;
+  GoogleFonts.config.allowRuntimeFetching = false;
+  addLicenses();
   // paddingRM.deletePersistState;
+  RM.navigate.transitionsBuilder = RM.transitions.leftToRight();
   runApp(MyApp());
 }
 

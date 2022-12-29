@@ -3,7 +3,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
-import '../idealApp/controllers/core.dart';
+import '../apps/idealApp/controllers/core.dart';
 
 class HiveStore implements IPersistStore {
   late Box x;
