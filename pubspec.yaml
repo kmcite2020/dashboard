@@ -2,7 +2,7 @@ name: dashboard
 
 description: A new Flutter project.
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.1.1+1
 environment:
   sdk: '>=2.18.4 <3.0.0'
 dependencies:
@@ -12,13 +12,14 @@ dependencies:
   hive_flutter:
   uuid:
   file_picker:
-  material_design_icons_flutter: ^5.0.6996
+  material_design_icons_flutter: 
   states_rebuilder:
   google_fonts: 
   colornames: 
   equatable:
   shared_preferences: 
-  get: ^4.6.5
+  get: 
+  collection:
 dev_dependencies:
   flutter_test:
     sdk: flutter
