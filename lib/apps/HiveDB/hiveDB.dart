@@ -83,21 +83,6 @@ class MyHomePage extends StatelessWidget {
               Icons.leaderboard_outlined,
             ),
           ),
-          FloatingActionButton(
-            heroTag: randomID,
-            onPressed: () async {
-              // databaseModel.currentDBRM.state = await databaseModel.openBox();
-              RM.navigate.to(
-                DatabasePage(
-                  rxDB: currentDBRM,
-                ),
-              );
-            },
-            tooltip: 'Open Database Page',
-            child: Icon(
-              Icons.leaderboard_outlined,
-            ),
-          ),
         ],
       ),
     );

@@ -1,23 +1,28 @@
 // ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables
+import 'package:dashboard/apps/HiveDB/core.dart';
+import 'package:dashboard/apps/HiveDB/databaseDetails.dart';
 import 'package:dashboard/core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 class DatabasePage extends ReactiveStatelessWidget {
-  final ReactiveModel<Box> rxDB;
-
-  const DatabasePage({super.key, required this.rxDB});
+  const DatabasePage({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("${databaseRM.state.name}-${databaseRM.state.length} entries"),
+      ),
       body: ListView(
         children: [
           Padding(
             padding: EdgeInsets.all(padding),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                databaseRM.state.clear();
+              },
               child: Text('CLEAR DATABASE'),
             ),
           ),
@@ -36,35 +41,43 @@ class DatabasePage extends ReactiveStatelessWidget {
             ),
           ),
           Divider(),
-          Padding(
-            padding: EdgeInsets.all(padding),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: EdgeInsets.all(padding),
-                    child: TextFormField(
-                      decoration: InputDecoration(labelText: 'KEY'),
+          OnFormBuilder(
+            listenTo: addKeyValuePair,
+            builder: () => Padding(
+              padding: EdgeInsets.all(padding),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: EdgeInsets.all(padding),
+                      child: TextFormField(
+                        controller: keyFF.controller,
+                        decoration: InputDecoration(
+                          labelText: 'KEY',
+                          errorText: keyFF.error,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Padding(
-                    padding: EdgeInsets.all(padding),
-                    child: TextFormField(
-                      decoration: InputDecoration(labelText: 'VALUE'),
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: EdgeInsets.all(padding),
+                      child: TextFormField(
+                        decoration: InputDecoration(labelText: 'VALUE', errorText: valueFF.error),
+                        controller: valueFF.controller,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Padding(
             padding: EdgeInsets.all(padding),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: addKeyValuePair.submit,
               child: Text('ADD k-v pair to DATABASE'),
             ),
           ),
@@ -81,8 +94,15 @@ class DatabasePage extends ReactiveStatelessWidget {
               children: [
                 Expanded(
                   flex: 2,
-                  child: TextField(
-                    decoration: InputDecoration(labelText: 'INDEX'),
+                  child: TextFormField(
+                    decoration: InputDecoration(labelText: 'INDEX', errorText: indexFF.error),
+                    onChanged: (value) {
+                      if (int.parse(value) >= currentDB.length - 1) {
+                        indexFF.value = 0;
+                      } else {
+                        indexFF.value = int.parse(value);
+                      }
+                    },
                   ),
                 ),
                 Expanded(
@@ -100,7 +120,9 @@ class DatabasePage extends ReactiveStatelessWidget {
                   child: Card(
                     child: Padding(
                       padding: EdgeInsets.all(padding),
-                      child: Text('value'),
+                      child: Text(
+                          // databaseRM.state.getAt(indexFF.value)
+                          ''),
                     ),
                   ),
                 )
@@ -150,7 +172,9 @@ class DatabasePage extends ReactiveStatelessWidget {
           Padding(
             padding: EdgeInsets.all(padding),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                RM.navigate.to(DatabaseDetailsPage());
+              },
               child: Text(
                 'LIST ALL DATA',
               ),

@@ -5,6 +5,10 @@ import '../themes.dart';
 import '../utils.dart';
 
 ThemeData get lightThemeData => ThemeData(
+      listTileTheme: ListTileThemeData(
+        tileColor: color.shade100,
+        selectedTileColor: color.shade400.withAlpha(200),
+      ),
       // backgroundColor: Colors.blue,
       // bottomAppBarColor: Colors.blue,
       // cardColor: Colors.blue,
