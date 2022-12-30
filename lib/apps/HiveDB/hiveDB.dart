@@ -1,7 +1,10 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_returning_null_for_void, file_names
 
 import 'dart:io';
 
+import 'package:dashboard/apps/HiveDB/databasePage.dart';
+import 'package:dashboard/core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
@@ -9,6 +12,8 @@ import 'package:states_rebuilder/states_rebuilder.dart';
 
 import '../../core/apps.dart';
 import '../../core/utils.dart';
+import 'core.dart';
+import 'databaseDetails.dart';
 
 class HiveDB extends ReactiveStatelessWidget {
   const HiveDB({super.key});
@@ -24,7 +29,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentDB = databaseModel.currentDB;
     return Scaffold(
       appBar: AppBar(
         actions: [AppSelectorToggle()],
@@ -35,148 +39,78 @@ class MyHomePage extends StatelessWidget {
           textScaleFactor: 1.2,
         ),
       ),
-      body: databaseModel.currentDB == null
-          ? ListView(
-              children: [
-                AppSelector(),
-                OnFormFieldBuilder(
-                  listenTo: databaseModel.currentFileRM,
-                  builder: (_, __) => DropdownButton<String>(
-                    value: _,
-                    items: databaseModel.files.map(
-                      (e) {
-                        return DropdownMenuItem(
-                          value: e.uri.pathSegments.last,
-                          child: Text(e.uri.pathSegments.last),
-                        );
-                      },
-                    ).toList()
-                      ..add(DropdownMenuItem(value: null.toString(), child: Text('LOVE'))),
-                    onChanged: __,
-                  ),
+      body: ListView(
+        children: [
+          AppSelector(),
+          Padding(
+            padding: EdgeInsets.all(padding),
+            child: Text('Please look for file ending with .hive and select it.', textScaleFactor: 1.5),
+          ),
+          if (filesRM.isWaiting)
+            Center(child: CircularProgressIndicator())
+          else
+            for (final file in files)
+              ListTile(
+                selected: currentFileRM.state == file.uri.pathSegments.last.split('.hive').first,
+                onTap: () {
+                  currentFileRM.state = file.uri.pathSegments.last.split('.hive').first;
+                },
+                title: Column(
+                  children: [
+                    Text(
+                      file.uri.pathSegments.last.split('.hive').first,
+                    ),
+                  ],
                 ),
-                for (final file in databaseModel.files)
-                  ListTile(
-                    title: Column(
-                      children: [
-                        Text(
-                          file.uri.pathSegments.last,
-                        ),
-                      ],
-                    ),
-                    subtitle: Text(
-                      file.path,
-                    ),
-                  ),
-              ],
-            )
-          : databaseModel.isWaiting
-              ? Center(child: CircularProgressIndicator())
-              : databaseModel.hasError
-                  ? Text(
-                      'Error',
-                    )
-                  : ListView(
-                      children: <Widget>[
-                        Text(currentDB!.path!),
-                        Text(currentDB.name),
-                        Text(currentDB.hashCode.toString()),
-                        Text("isOpen ${currentDB.isOpen}"),
-                        Text("Lazy ${currentDB.lazy}"),
-                        Text("isEmpty ${currentDB.isEmpty}"),
-                        Text("isNotEmpty ${currentDB.isNotEmpty}"),
-                        Text(currentDB.length.toString()),
-                        // Text(currentDB),
-                        Text(currentDB.hashCode.toString()),
-                        Text(currentDB.hashCode.toString()),
-                        Text(Directory.current.path),
-
-                        Column(
-                          children: [
-                            for (final k in currentDB.keys) Text(k),
-                            for (final k in currentDB.values) Text(k),
-                          ],
-                        ),
-                      ],
-                    ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: randomID,
-        onPressed: () async {
-          showDialog<Box?>(
-            context: context,
-            builder: (context) => SimpleDialog(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    controller: databaseModel.boxName.controller,
-                  ),
+                subtitle: Text(
+                  file.path,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      databaseModel.currentDBRM.stateAsync = Hive.openBox(
-                        databaseModel.boxName.value,
-                      );
-                      RM.navigate.back();
-                    },
-                    child: Text(
-                      'Open DB',
-                    ),
-                  ),
-                )
-              ],
+              ),
+          Text(
+            'Error',
+          )
+        ],
+      ),
+      floatingActionButton: ButtonBar(
+        children: [
+          FloatingActionButton(
+            heroTag: randomID,
+            onPressed: () {
+              openBox();
+            },
+            tooltip: 'Load a DB',
+            child: Icon(
+              Icons.leaderboard_outlined,
             ),
-          );
-        },
-        tooltip: 'Load a DB',
-        child: Icon(
-          Icons.leaderboard_outlined,
-        ),
+          ),
+          FloatingActionButton(
+            heroTag: randomID,
+            onPressed: () async {
+              // databaseModel.currentDBRM.state = await databaseModel.openBox();
+              RM.navigate.to(
+                DatabasePage(
+                  rxDB: currentDBRM,
+                ),
+              );
+            },
+            tooltip: 'Open Database Page',
+            child: Icon(
+              Icons.leaderboard_outlined,
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-final DatabaseModel databaseModel = DatabaseModel();
-
-@immutable
-class DatabaseModel {
-  Box? get currentDB => currentDBRM.state;
-  bool get isWaiting => currentDBRM.isWaiting;
-  bool get hasError => currentDBRM.hasError;
-  String get error => currentDBRM.error.message;
-  final currentDBRM = RM.inject<Box?>(
-    () => null,
-    debugPrintWhenNotifiedPreMessage: 'DB',
-    toDebugString: (p0) => p0.toString(),
-  );
-  final boxName = RM.injectTextEditing();
-  openBox() async {
-    try {
-      return Hive.openBox(currentFileRM.state!);
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  final currentFileRM = RM.inject<String?>(() => '');
-
-  List<FileSystemEntity> get files => filesRM.state;
-  final filesRM = RM.injectFuture(getFilesInDocumentsDirectory);
-  static Future<List<FileSystemEntity>> getFilesInDocumentsDirectory() async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    List<FileSystemEntity> files = directory.listSync();
-    print(files);
-    return files;
-  }
 
 
 
-///clear - delete all entries
-///close -
-///compact - optimize
+
+/// clear - delete all entries
+/// close -
+/// compact - optimize
 /// check if specific key is present | return the value /true at the key
 /// create a map from box
 /// add k-v pair
@@ -185,3 +119,4 @@ class DatabaseModel {
 /// return a key at specific index
 /// edit an existing key's value
 /// delete a value
+
