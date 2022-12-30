@@ -25,7 +25,7 @@ class ArchivesList extends ReactiveStatelessWidget {
       ),
       body: ListView(
         children: [
-          for (final patient in archivedPatientList)
+          for (final patient in archivedPatients)
             Card(
               child: ListTile(
                 leading: CircleAvatar(child: Text(patient.age.toInt().toString())),
@@ -35,14 +35,14 @@ class ArchivesList extends ReactiveStatelessWidget {
                   children: [
                     Text3(patient.id, size: 13),
                     Text3(
-                      patient.name,
+                      patient.patient,
                       size: 20,
                     ),
                   ],
                 ),
                 trailing: IconButton(
                   onPressed: () {
-                    deletePatientFromArchives(patient);
+                    removePatientFromArchives = patient;
                   },
                   icon: Icon(Icons.delete_forever),
                 ),

@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_typing_uninitialized_variables, unnecessary_brace_in_string_interps, unused_import, unused_local_variable, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
 
 import 'package:collection/collection.dart';
+import 'package:dashboard/core/apps.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
+import '../../../core/themes.dart';
 import '../floater.dart';
 import '../settings/settings.dart';
 import '../settings/user_information.dart';
@@ -26,18 +28,22 @@ class Home extends ReactiveStatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Project Beseech'),
+            Text('Beseech'),
             IconButton(
               onPressed: () {
-                Settings.open(context);
+                RM.navigate.to(Settings());
               },
               icon: Icon(Icons.settings),
             )
           ],
         ),
+        actions: [
+          AppSelectorToggle(),
+        ],
       ),
       body: ListView(
         children: [
+          AppSelector(),
           PrayerCounterWidget(name: 'Fajr', count: fajrRM),
           PrayerCounterWidget(name: 'Zuhr', count: zuhrRM),
           PrayerCounterWidget(name: 'Asar', count: asarRM),
@@ -100,11 +106,11 @@ class PrayerCounterWidget extends ReactiveStatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(padding),
                 child: Text(name, textScaleFactor: 1.2),
               ),
               Padding(
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.all(padding),
                 child: show.state
                     ? Column(
                         children: [
@@ -128,7 +134,7 @@ class PrayerCounterWidget extends ReactiveStatelessWidget {
                             10,
                           ),
                         ),
-                        padding: const EdgeInsets.all(5),
+                        padding: EdgeInsets.all(padding),
                         child: Column(
                           children: [
                             IconButton(
@@ -159,7 +165,7 @@ class PrayerCounterWidget extends ReactiveStatelessWidget {
           ),
           show.state
               ? Padding(
-                  padding: const EdgeInsets.all(5),
+                  padding: EdgeInsets.all(padding),
                   child: TextFormField(
                     keyboardType: TextInputType.number,
                     controller: text.controller,
@@ -175,7 +181,7 @@ class PrayerCounterWidget extends ReactiveStatelessWidget {
                         textScaleFactor: 1,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(padding),
                         child: Text(
                           count.state.toString(),
                           textScaleFactor: 2,

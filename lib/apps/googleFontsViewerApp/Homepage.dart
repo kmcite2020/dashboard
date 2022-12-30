@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:dashboard/core/apps.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
@@ -53,6 +54,7 @@ class MyHomePage extends ReactiveStatelessWidget {
       ],
       appBar: AppBar(
         actions: [
+          AppSelectorToggle(),
           IconButton(
             tooltip: 'show all fonts',
             onPressed: () => visibilityRM.state = !visiblity,

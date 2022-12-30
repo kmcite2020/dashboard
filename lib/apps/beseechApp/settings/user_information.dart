@@ -1,9 +1,10 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, use_key_in_widget_constructors, must_be_immutable, prefer_const_literals_to_create_immutables, sort_child_properties_last, no_leading_underscores_for_local_identifiers, unnecessary_brace_in_string_interps, unused_element
+// ignore_for_file: prefer_typing_uninitialized_variables, use_key_in_widget_constructors, must_be_immutable, prefer_const_literals_to_create_immutables, sort_child_properties_last, no_leading_underscores_for_local_identifiers, unnecessary_brace_in_string_interps, unused_element, prefer_const_constructors
 
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
+import '../../../core/themes.dart';
 import '../core.dart';
 
 final _currentDateTime = RM.inject<DateTime>(() => DateTime.now());
@@ -151,7 +152,7 @@ class DateManger extends ReactiveStatelessWidget {
                         firstDate: DateTime(1950),
                         lastDate: DateTime(2050),
                       ) as DateTime;
-                      print(date.state.toString());
+                      // print(date.state.toString());
                       // await Hive.box(store).put(persistKey, date.state);
                     },
                     child: Padding(

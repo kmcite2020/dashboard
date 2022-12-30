@@ -1,12 +1,16 @@
-import 'package:google_fonts/google_fonts.dart';
+// ignore_for_file: prefer_const_constructors
 
-// USEFULL GETTERS AND FUNCTIONS
+import 'package:google_fonts/google_fonts.dart';
+import 'package:uuid/uuid.dart';
+
 String googleFont(String font) {
   String fontFamily = 'Fira';
-  for (final any in GoogleFonts.asMap().keys) {
-    if (any == font) {
+  for (final eachFont in GoogleFonts.asMap().keys) {
+    if (eachFont == font) {
       fontFamily = GoogleFonts.getFont(font).fontFamily as String;
     }
   }
   return fontFamily;
 }
+
+String get randomID => Uuid().v1();

@@ -13,6 +13,7 @@ class Study extends ReactiveStatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: CustomDrawer(label),
+      appBar: AppBar(),
       body: SafeArea(
         child: Text(
           label,

@@ -3,8 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
-import 'app.dart';
-import 'persistence.dart';
+import 'pages/home.dart';
 
 final userID = RM.inject<String?>(() => null);
-IPersistStore get store => HiveStore(userID.state ?? 'guest');
+
+class BloodPressureManagerApp extends ReactiveStatelessWidget {
+  const BloodPressureManagerApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MyHomepage();
+  }
+}

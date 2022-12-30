@@ -5,7 +5,7 @@ import 'package:states_rebuilder/states_rebuilder.dart';
 
 import '../apps/idealApp/controllers/core.dart';
 
-class HiveStore implements IPersistStore {
+class Storage implements IPersistStore {
   late Box x;
   Future<void> init() async {
     x = Hive.box(database);

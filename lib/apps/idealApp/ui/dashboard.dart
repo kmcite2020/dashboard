@@ -20,7 +20,7 @@ class Dashboard extends ReactiveStatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          HideAppSelector(),
+          AppSelectorToggle(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: IconButton(

@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, prefer_interpolation_to_compose_strings, unused_import, duplicate_import, depend_on_referenced_packages, unused_local_variable, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, must_be_immutable, unused_field, no_leading_underscores_for_local_identifiers
 
+import 'package:dashboard/core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -8,8 +9,7 @@ import 'package:states_rebuilder/states_rebuilder.dart';
 import '../components/custom_drawer.dart';
 import '../components/widgets.dart';
 import '../core/core.dart';
-import '../core/i18n.dart';
-import '../core/themes.dart';
+import '../core/doctorOnDuty.dart';
 import 'patient_admission_form.dart';
 
 late BuildContext context;
@@ -22,42 +22,30 @@ class Settings extends ReactiveStatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _i18n = i18n.of(context);
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-      drawer: CustomDrawer(_i18n.settingsLabel),
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   title: Text3('Settings'),
-      // ),
+      drawer: CustomDrawer("settingsLabel"),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text3('Settings'),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
             children: [
-              Text2(_i18n.themes),
-              for (final lightTheme in theme.supportedLightThemes.keys)
-                ContainerButton(
-                  color: theme.activeTheme(lightTheme).primaryColor,
-                  onTap: () => theme.state = lightTheme,
-                  label: lightTheme,
-                ),
-              // for (final darkTheme in theme.supportedDarkThemes.keys)
-              //   ContainerButton(
-              //     color: theme.activeTheme(darkTheme).primaryColor,
-              //     onTap: () => theme.state = darkTheme,
-              //     label: darkTheme,
-              //   ),
-              Text2(theme.state),
-              Text2("${admissionsCapacity.value.toInt()}"),
+              ...themingWidgets(size),
+              Card(
+                  child: Padding(
+                padding: EdgeInsets.all(padding),
+                child: Text(admissionsCapacity.toString()),
+              )),
               Slider(
-                label: "${admissionsCapacity.value.toInt()}",
+                label: "$admissionsCapacity",
                 min: 0,
                 max: 100,
-                focusNode: admissionsCapacity.focusNode,
-                value: admissionsCapacity.value,
-                onChanged: (value) {
-                  admissionsCapacity.value = value;
-                },
+                value: admissionsCapacity.toDouble(),
+                onChanged: (value) => admissionsCapacity = value.toInt(),
               ),
               UserInfo(),
               ListTile(
@@ -131,59 +119,56 @@ class UserInfo extends ReactiveStatelessWidget {
             ),
             margin: EdgeInsets.all(8),
             padding: EdgeInsets.all(8),
-            child: OnFormBuilder(
-                listenTo: userForm,
-                builder: () {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Center(child: Text3('USER INFORMATIONS')),
-                          Row(
-                            children: [
-                              IconButton(
-                                  onPressed: () {
-                                    edit.toggle();
-                                  },
-                                  icon: Icon(Icons.cancel)),
-                              IconButton(
-                                  onPressed: () {
-                                    userForm.submit();
-                                    edit.toggle();
-                                  },
-                                  icon: Icon(Icons.done)),
-                            ],
-                          )
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextField(
-                          decoration: InputDecoration(labelText: 'DOCTOR'),
-                          controller: doctor.controller,
-                          focusNode: doctor.focusNode,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Center(child: Text3('USER INFORMATIONS')),
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            edit.toggle();
+                          },
+                          icon: Icon(Icons.done),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextField(
-                          decoration: InputDecoration(labelText: 'DEPARTMENT'),
-                          // controller: ward.controller,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextFormField(
-                          decoration: InputDecoration(labelText: 'HOSPITAL'),
-                          // initialValue: hospital.value,
-                          // onChanged: hospital.onChanged,
-                        ),
-                      ),
-                    ],
-                  );
-                }),
+                      ],
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: TextFormField(
+                    initialValue: doctor,
+                    decoration: InputDecoration(labelText: 'DOCTOR'),
+                    onChanged: (value) => doctor = value,
+                    keyboardType: TextInputType.text,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: TextFormField(
+                    initialValue: ward,
+                    decoration: InputDecoration(labelText: 'DEPARTMENT'),
+                    onChanged: (value) => ward = value,
+                    keyboardType: TextInputType.text,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: TextFormField(
+                    initialValue: hospital,
+                    decoration: InputDecoration(
+                      labelText: 'HOSPITAL',
+                    ),
+                    onChanged: (value) => hospital = value,
+                    keyboardType: TextInputType.text,
+                  ),
+                ),
+              ],
+            ),
           )
         : Container(
             //READ
@@ -204,7 +189,6 @@ class UserInfo extends ReactiveStatelessWidget {
                     IconButton(
                         onPressed: () {
                           edit.toggle();
-                          doctor.focusNode.requestFocus();
                         },
                         icon: Icon(Icons.edit)),
                   ],
@@ -216,7 +200,7 @@ class UserInfo extends ReactiveStatelessWidget {
                       'DOCTOR',
                       textScaleFactor: .8,
                     ),
-                    Text(doctor.text),
+                    Text(doctor),
                   ],
                 ),
                 Column(
@@ -226,7 +210,7 @@ class UserInfo extends ReactiveStatelessWidget {
                       'DEPARTMENT',
                       textScaleFactor: .8,
                     ),
-                    // Text(ward.text),
+                    Text(ward),
                   ],
                 ),
                 Column(
@@ -236,7 +220,7 @@ class UserInfo extends ReactiveStatelessWidget {
                       'HOSPITAL',
                       textScaleFactor: .8,
                     ),
-                    // Text(hospital.value),
+                    Text(hospital),
                   ],
                 ),
               ],

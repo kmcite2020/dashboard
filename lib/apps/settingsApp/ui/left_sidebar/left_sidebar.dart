@@ -10,50 +10,31 @@ import 'settings_labels_and_icons.dart';
 class LeftSidebar extends ReactiveStatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 250,
-      child: Container(
-        // color: Theme.of(context).focusColor,
-        child: Column(
-          children: [
-            Column(
-              children: [
-                ListView(
-                  shrinkWrap: true,
-                  children: [
-                    ListTile(
-                      leading: CircleAvatar(backgroundColor: color, child: FlutterLogo()),
-                      title: Text('Adnan Farooq'),
-                      subtitle: Text(
-                        'college.learning.458@outlook.com',
-                      ),
-                    ),
-                    for (final eachSetting in settingsList)
-                      ListTile(
-                        leading: eachSetting[1],
-                        // selected: indexRM.state == settingsList.indexOf(eachSetting),
-                        onTap: () => indexRM.state = settingsList.indexOf(eachSetting),
-                        title: Text(eachSetting[0]),
-                      ),
-                  ],
+    return Container(
+      child: Column(
+        children: [
+          Column(
+            children: [
+              ListView(
+                shrinkWrap: true,
+                children: [],
+              ),
+              Spacer(),
+              ListTile(
+                title: Text('Select App Color'),
+                subtitle: Slider(
+                  min: 0,
+                  max: colors.length.toDouble() - 1,
+                  divisions: colors.length,
+                  value: colors.indexOf(color).toDouble(),
+                  onChanged: (value) {
+                    colorRM.state = colors[value.toInt()];
+                  },
                 ),
-                Spacer(),
-                ListTile(
-                  title: Text('Select App Color'),
-                  subtitle: Slider(
-                    min: 0,
-                    max: colors.length.toDouble() - 1,
-                    divisions: colors.length,
-                    value: colors.indexOf(color).toDouble(),
-                    onChanged: (value) {
-                      colorRM.state = colors[value.toInt()];
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

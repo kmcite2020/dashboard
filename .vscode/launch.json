@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "name": "Apps - dashboard (release)",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "Apps - debug",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib\\main.dart"
+        }
+    ]
+}

@@ -15,7 +15,7 @@ class QuizApp extends StatelessWidget {
       appBar: AppBar(
         title: Text('Quiz App'),
         actions: [
-          const HideAppSelector(),
+          const AppSelectorToggle(),
         ],
       ),
       body: Column(

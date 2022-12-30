@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:dashboard/core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -12,44 +13,13 @@ import 'initialize.dart';
 import 'settings/user_information.dart';
 import 'core.dart';
 
-class BeseechApp extends TopStatelessWidget {
+class BeseechApp extends ReactiveStatelessWidget {
   static open(context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => BeseechApp()));
   }
 
   @override
   Widget build(BuildContext context) {
-    return OnReactive(
-      () => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        navigatorKey: RM.navigate.navigatorKey,
-        theme: ThemeData(
-          scaffoldBackgroundColor: color.shade200,
-          inputDecorationTheme: InputDecorationTheme(
-              filled: true,
-              fillColor: color.shade100,
-              border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10))),
-          cardTheme: CardTheme(
-            shape: BeveledRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
-          ),
-          listTileTheme: ListTileThemeData(
-            shape: BeveledRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
-          ),
-          fontFamily: GoogleFonts.getFont(font).fontFamily,
-          brightness: dark ? Brightness.dark : Brightness.light,
-          useMaterial3: true,
-          colorSchemeSeed: color,
-        ),
-        home: isInitialized ? Home() : Initialize(),
-      ),
-    );
+    return isInitialized ? Home() : Initialize();
   }
 }

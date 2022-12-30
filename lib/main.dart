@@ -2,7 +2,10 @@
 
 import 'dart:async';
 
+import 'package:dashboard/apps/prayersApp/features/authentication/authentication.dart';
 import 'package:dashboard/assets/licenses.dart';
+import 'package:dashboard/core/themes/darkThemeData.dart';
+import 'package:dashboard/core/themes/lightThemeData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,10 +21,12 @@ import 'core/utils.dart';
 void main() async {
   await Hive.initFlutter();
   // TODO re-implement database name as there is dependency on internal app
+  // RM.deleteAllPersistState();
   await Hive.openBox(database);
   GoogleFonts.config.allowRuntimeFetching = false;
   addLicenses();
   // paddingRM.deletePersistState;
+  // RM.deleteAllPersistState();
   RM.navigate.transitionsBuilder = RM.transitions.leftToRight();
   runApp(MyApp());
 }
@@ -31,7 +36,7 @@ class MyApp extends TopStatelessWidget {
   List<FutureOr<void>>? ensureInitialization() => [
         Future.delayed(1.seconds),
         initDefaultImage,
-        RM.storageInitializer(HiveStore()),
+        RM.storageInitializer(Storage()),
       ];
   @override
   Widget? splashScreen() => MaterialApp(
@@ -43,12 +48,12 @@ class MyApp extends TopStatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.store,
+                  Icons.apple_sharp,
                   size: 250,
                   color: Colors.purple,
                 ),
                 Text(
-                  'URideal Store',
+                  'Apps - Dashboard',
                   textScaleFactor: 3,
                 ),
               ],
@@ -79,37 +84,16 @@ class MyApp extends TopStatelessWidget {
   }
 
   @override
-  Widget build(context) => OnReactive(
-        () => MaterialApp(
-          navigatorKey: RM.navigate.navigatorKey,
-          debugShowCheckedModeBanner: false,
-          theme: theme,
-          themeMode: themeMode,
-          darkTheme: darkTheme,
-          home: Scaffold(
-            appBar: hide.state
-                ? null
-                : AppBar(
-                    title: DropdownButtonFormField(
-                      value: app.state,
-                      items: Apps.values
-                          .map(
-                            (e) => DropdownMenuItem(
-                              value: e,
-                              child: Text(
-                                e.toString(),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: (onChanged) {
-                        app.state = onChanged!;
-                        hide.toggle();
-                      },
-                    ),
-                  ),
-            body: runSelectedApp,
-          ),
-        ),
-      );
+  Widget build(context) {
+    return OnReactive(
+      () => MaterialApp(
+        navigatorKey: RM.navigate.navigatorKey,
+        debugShowCheckedModeBanner: false,
+        theme: lightThemeData,
+        themeMode: themeMode,
+        darkTheme: darkThemeData,
+        home: runSelectedApp,
+      ),
+    );
+  }
 }

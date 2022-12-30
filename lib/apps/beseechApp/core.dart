@@ -59,40 +59,12 @@ var _bio = RM.inject(
 
 /// SETTINGS
 
-final darkRM = RM.inject<bool>(
-  () => false,
-  autoDisposeWhenNotUsed: false,
-  persist: () => PersistState(key: 'DARK'),
-);
-bool get dark => darkRM.state;
-set dark(value) => darkRM.state = value;
-
-List<MaterialColor> get colors => Colors.primaries;
-final colorRM = RM.inject<MaterialColor>(
-  () => colors.first,
-  persist: () => PersistState(
-    key: "COLOR",
-    toJson: (s) => jsonEncode(colors.indexOf(s)),
-    fromJson: (json) => colors[jsonDecode(json)],
-  ),
-);
-MaterialColor get color => colorRM.state;
-set color(MaterialColor value) => colorRM.state = value;
-
-List<String> get fonts => GoogleFonts.asMap().keys.take(10).toList();
-final fontRM = RM.inject<String>(() => fonts.first, persist: () => PersistState(key: 'FONT'));
-String get font => fontRM.state;
-
 /// PERSISTENT COUNTERS DATA
 final fajrRM = RM.inject<int>(() => 0, persist: () => PersistState(key: 'FAJR'), autoDisposeWhenNotUsed: false);
 final zuhrRM = RM.inject<int>(() => 0, persist: () => PersistState(key: 'ZUHR'), autoDisposeWhenNotUsed: false);
 final asarRM = RM.inject<int>(() => 0, persist: () => PersistState(key: 'ASAR'), autoDisposeWhenNotUsed: false);
 final maghribRM = RM.inject<int>(() => 0, persist: () => PersistState(key: 'MAGHRIB'), autoDisposeWhenNotUsed: false);
-final ishaRM = RM.inject<int>(
-  () => 0,
-  persist: () => PersistState(key: 'ISHA'),
-  autoDisposeWhenNotUsed: false,
-);
+final ishaRM = RM.inject<int>(() => 0, persist: () => PersistState(key: 'ISHA'), autoDisposeWhenNotUsed: false);
 // ALL PRAYERS COUNT
 final sumOfAllPrayersRM = RM.inject<int>(
   () => fajrRM.state + zuhrRM.state + asarRM.state + maghribRM.state + ishaRM.state,
@@ -102,22 +74,3 @@ final sumOfAllPrayersRM = RM.inject<int>(
   autoDisposeWhenNotUsed: false,
 );
 int get sumOfAllPrayers => sumOfAllPrayersRM.state;
-
-/// PERSISTENCE
-class HiveStore implements IPersistStore {
-  late Box x;
-  @override
-  Future<void> init() async {
-    await Hive.initFlutter();
-    x = await Hive.openBox('STATES_REBUILDER');
-  }
-
-  @override
-  Object? read(String k) => x.get(k);
-  @override
-  Future<void> write<T>(String k, T v) async => x.put(k, v);
-  @override
-  Future<void> delete(String k) async => x.delete(k);
-  @override
-  Future<void> deleteAll() async => await x.clear();
-}

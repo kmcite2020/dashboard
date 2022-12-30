@@ -1,7 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors, duplicate_ignore, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, unused_import, dead_code, unused_local_variable
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
@@ -41,7 +40,7 @@ class AccountManager extends StatelessWidget {
                 onPressed: () {
                   logout();
                 },
-                child: Text('logout'.tr),
+                child: Text('logout'),
               ),
             )
           ],

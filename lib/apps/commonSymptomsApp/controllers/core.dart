@@ -7,17 +7,6 @@ import 'package:uuid/uuid.dart';
 
 import 'patient.dart';
 
-final themeModeRM = RM.inject(
-  () => ThemeMode.system,
-  persist: () => PersistState(
-    key: 'ThemeMode2',
-    toJson: (s) => jsonEncode(ThemeMode.values.indexOf(s)),
-    fromJson: (json) => ThemeMode.values[jsonDecode(json)],
-  ),
-);
-void setThemeMode(value) => themeModeRM.state = value;
-ThemeMode get themeMode => themeModeRM.state;
-
 enum Symptom {
   cough('Cough'),
   fever('Fever'),

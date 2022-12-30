@@ -33,7 +33,7 @@ class TimerApp extends ReactiveStatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(actions: [
-        HideAppSelector(),
+        AppSelectorToggle(),
       ]),
       body: Card(
         child: Column(

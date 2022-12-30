@@ -4,4 +4,4 @@ import 'package:flutter/material.dart';
 
 import 'pages/homepage.dart';
 
-Widget get HospitalApp => Homepage();
+Widget get hospitalApp => Homepage();

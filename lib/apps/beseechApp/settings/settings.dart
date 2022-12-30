@@ -2,13 +2,13 @@
 
 import 'dart:math';
 
+import 'package:dashboard/core/themes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 import '../beseechApp.dart';
-import '../settings/user_experience.dart';
 import '../core.dart';
 import 'about.dart';
 import 'delete_all.dart';
@@ -17,17 +17,9 @@ import 'help.dart';
 import 'user_information.dart';
 
 class Settings extends ReactiveStatelessWidget {
-  static open(context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Settings(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -51,7 +43,11 @@ class Settings extends ReactiveStatelessWidget {
         children: [
           SizedBox(height: 3),
           UserInformation(),
-          UserExperience(),
+          ThemeModeChanger(),
+          ColorChanger(size),
+          FontChanger(),
+          PaddingChanger(),
+          BorderRadiusChanger(),
           FeedbackTile(),
           Help(),
           About(),

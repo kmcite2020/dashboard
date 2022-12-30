@@ -7,6 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
+import 'themes/darkThemeData.dart';
+import 'themes/lightThemeData.dart';
+import 'utils.dart';
+
 final dependers = {
   themeModeRM,
   fontRM,
@@ -14,6 +18,7 @@ final dependers = {
   paddingRM,
   borderRadiusRM,
 };
+
 List<Widget> themingWidgets(size) {
   return [
     ThemeModeChanger(),
@@ -25,7 +30,22 @@ List<Widget> themingWidgets(size) {
 }
 
 List<MaterialColor> get colors => Colors.primaries;
-List<String> get fonts => GoogleFonts.asMap().keys.toList().take(40).toList();
+List<String> get fonts {
+  return [
+    'Azeret Mono',
+    'Comfortaa',
+    'DM Mono',
+    'Dosis',
+    'Fira Sans',
+    'IBM Plex Mono',
+    'Josefin Sans',
+    'Montserrat',
+    'Space Mono',
+    'Ubuntu',
+  ];
+  // return GoogleFonts.asMap().keys.toList().take(100).toList();
+}
+
 List<ThemeMode> get themeModes => ThemeMode.values;
 double get appBarHeight {
   if (padding <= 10) {
@@ -61,9 +81,9 @@ set color(value) => colorRM.state = value;
 
 final fontRM = RM.inject<String>(
   () => fonts.first,
-  persist: () => PersistState(
-    key: 'FONT',
-  ),
+  // persist: () => PersistState(
+  //   key: 'FONT',
+  // ),
 );
 String get font => fontRM.state;
 set font(value) => fontRM.state = value;
@@ -83,154 +103,13 @@ double get borderRadius => borderRadiusRM.state;
 set borderRadius(value) => borderRadiusRM.state = value;
 
 final themeRM = RM.inject<ThemeData>(
-  () => ThemeData(
-    scaffoldBackgroundColor: color.shade200,
-    canvasColor: color.shade300,
-    focusColor: color.shade700,
-    dialogTheme: DialogTheme(backgroundColor: color),
-    popupMenuTheme: PopupMenuThemeData(
-      color: color,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(
-          borderRadius,
-        ),
-      ),
-    ),
-    appBarTheme: AppBarTheme(backgroundColor: color.shade100, elevation: 10, toolbarHeight: appBarHeight),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        elevation: 10,
-        backgroundColor: color.shade900,
-        foregroundColor: color.shade100,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            borderRadius,
-          ),
-        ),
-      ),
-    ),
-    textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(
-        backgroundColor: color.shade700,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            borderRadius,
-          ),
-        ),
-        foregroundColor: color.shade900,
-      ),
-    ),
-    outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(
-        backgroundColor: color.shade800,
-        foregroundColor: color.shade200,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            borderRadius,
-          ),
-        ),
-      ),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      // contentPadding: EdgeInsets.all(18),
-      filled: true,
-      fillColor: color.shade200,
-      hoverColor: color.shade600,
-      focusColor: color.shade900,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(borderRadius),
-      ),
-    ),
-    colorSchemeSeed: color.shade200,
-    cardTheme: CardTheme(
-      color: color.shade300,
-      elevation: 10,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(
-          borderRadius,
-        ),
-      ),
-      margin: EdgeInsets.all(padding),
-    ),
-    brightness: Brightness.light,
-    useMaterial3: true,
-    fontFamily: GoogleFonts.getFont(font).fontFamily,
-  ),
-  dependsOn: DependsOn(dependers),
+  // lightThemeData
+  () => lightThemeData, dependsOn: DependsOn(dependers),
 );
 ThemeData get theme => themeRM.state;
 
 final darkThemeRM = RM.inject(
-  () => ThemeData(
-    scaffoldBackgroundColor: color.shade900,
-    canvasColor: color.shade800,
-    focusColor: color.shade400,
-    dialogTheme: DialogTheme(backgroundColor: color),
-    popupMenuTheme: PopupMenuThemeData(
-      color: color,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(borderRadius),
-      ),
-    ),
-    appBarTheme: AppBarTheme(backgroundColor: color.shade900, elevation: 10, toolbarHeight: appBarHeight),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        elevation: 10,
-        minimumSize: Size.fromHeight(40),
-        backgroundColor: color.shade300,
-        foregroundColor: color.shade900,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
-      ),
-    ),
-    textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(
-        elevation: 10,
-        minimumSize: Size.fromHeight(40),
-        backgroundColor: color.shade600,
-        foregroundColor: color.shade900,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            borderRadius,
-          ),
-        ),
-      ),
-    ),
-    outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(
-        elevation: 10,
-        minimumSize: Size.fromHeight(40),
-        backgroundColor: color.shade800,
-        foregroundColor: color.shade200,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
-      ),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: color.shade800,
-      hoverColor: color.shade900,
-      focusColor: color.shade600,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(borderRadius),
-      ),
-    ),
-    colorSchemeSeed: color,
-    cardTheme: CardTheme(
-        color: color.shade900,
-        elevation: 10,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            borderRadius,
-          ),
-        ),
-        margin: EdgeInsets.all(padding)),
-    brightness: Brightness.dark,
-    useMaterial3: true,
-    fontFamily: GoogleFonts.getFont(font).fontFamily,
-  ),
+  () => darkThemeData,
   dependsOn: DependsOn(dependers),
 );
 ThemeData get darkTheme => darkThemeRM.state;

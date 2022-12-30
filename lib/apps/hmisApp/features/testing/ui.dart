@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:dashboard/core/apps.dart';
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
@@ -15,8 +16,10 @@ class TestingPage extends ReactiveStatelessWidget {
         title: Text(
           'TEST PAGE',
         ),
+        actions: [AppSelectorToggle()],
       ),
       body: ListView(
+        shrinkWrap: true,
         children: [
           Padding(
             padding: const EdgeInsets.all(9),
@@ -106,13 +109,13 @@ class TestingPage extends ReactiveStatelessWidget {
                         ),
                       )
                     : SizedBox(),
-                ElevatedButton(
-                  onPressed: () => managerDoctor.doctorsRM.state = [],
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.amber),
-                  child: Text(
-                    'CLEAR STORE',
-                  ),
-                ),
+                // ElevatedButton(
+                //   onPressed: () => managerDoctor.doctorsRM.state = [],
+                //   style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.amber),
+                //   child: Text(
+                //     'CLEAR STORE',
+                //   ),
+                // ),
               ],
             ),
           ),

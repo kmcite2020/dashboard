@@ -2,21 +2,20 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, use_key_in_widget_constructors, must_be_immutable, prefer_typing_uninitialized_variables, unused_field
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:states_rebuilder/states_rebuilder.dart';
 import 'package:uuid/uuid.dart';
 
-import 'prescriptions.dart';
+import '../controllers/core.dart';
 
 class PrescriptionInfo extends StatelessWidget {
-  PrescriptionController prescriptionController = Get.find();
   final id;
   PrescriptionInfo({
     required this.id,
     //  this.prescription,
   });
   title() {
-    for (final prescription in prescriptionController.prescriptions.values) {
-      if (prescription['id'] == id) return prescription['medicine'];
+    for (final prescription in prescriptions) {
+      // if (prescription['id'] == id) return prescription['medicine'];
     }
   }
 
@@ -29,67 +28,67 @@ class PrescriptionInfo extends StatelessWidget {
           child: ListView(
             children: [
               SizedBox(height: 6),
-              for (final prescription in prescriptionController.prescriptions.values)
-                if (prescription['id'] == id)
-                  Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        margin: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(width: 2, color: Colors.brown),
-                          shape: BoxShape.rectangle,
-                          // color: colors[color.value][900],
-                        ),
-                        child: Text(prescription['id'].toString()),
+              for (final prescription in prescriptions)
+                // if (prescription['id'] == id)
+                Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      margin: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: 2, color: Colors.brown),
+                        shape: BoxShape.rectangle,
+                        // color: colors[color.value][900],
                       ),
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        margin: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(width: 2, color: Colors.brown),
-                          shape: BoxShape.rectangle,
-                          // color: colors[color.value][900],
-                        ),
-                        child: Text(prescription['formulation'] + ' ' + prescription['medicine']),
+                      // child: Text(prescription['id'].toString()),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      margin: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: 2, color: Colors.brown),
+                        shape: BoxShape.rectangle,
+                        // color: colors[color.value][900],
                       ),
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        margin: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(width: 2, color: Colors.brown),
-                          shape: BoxShape.rectangle,
-                          // color: colors[color.value][900],
-                        ),
-                        child: Text(prescription['dose'] + ' ' + prescription['route'] + ' ' + prescription['frequency']),
+                      // child: Text(prescription['formulation'] + ' ' + prescription['medicine']),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      margin: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: 2, color: Colors.brown),
+                        shape: BoxShape.rectangle,
+                        // color: colors[color.value][900],
                       ),
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        margin: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(width: 2, color: Colors.brown),
-                          shape: BoxShape.rectangle,
-                          // color: colors[color.value][900],
-                        ),
-                        child: Text(prescription['effect'].toString() + prescription['information'].toString()),
+                      // child: Text(prescription['dose'] + ' ' + prescription['route'] + ' ' + prescription['frequency']),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      margin: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: 2, color: Colors.brown),
+                        shape: BoxShape.rectangle,
+                        // color: colors[color.value][900],
                       ),
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        margin: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(width: 2, color: Colors.brown),
-                          shape: BoxShape.rectangle,
-                          // color: colors[color.value][900],
-                        ),
-                        child: Text('EDIT MODE - not implemented yet'),
+                      // child: Text(prescription['effect'].toString() + prescription['information'].toString()),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      margin: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: 2, color: Colors.brown),
+                        shape: BoxShape.rectangle,
+                        // color: colors[color.value][900],
                       ),
-                    ],
-                  )
+                      child: Text('EDIT MODE - not implemented yet'),
+                    ),
+                  ],
+                )
             ],
           ),
         ),
@@ -100,14 +99,14 @@ class PrescriptionInfo extends StatelessWidget {
             heroTag: Uuid().v1(),
             child: Icon(Icons.arrow_back),
             onPressed: () {
-              Get.back();
+              // Get.back();
             },
           ),
           FloatingActionButton(
             heroTag: Uuid().v1(),
             child: Icon(Icons.delete),
             onPressed: () {
-              Get.back();
+              RM.navigate.back();
               // deletePrescription(id);
             },
           ),

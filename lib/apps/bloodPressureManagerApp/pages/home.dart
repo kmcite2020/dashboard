@@ -2,9 +2,12 @@
 
 import 'dart:math';
 
+import 'package:dashboard/apps/bloodPressureManagerApp/pages/addBPEntry.dart';
+import 'package:dashboard/core/apps.dart';
 import 'package:flutter/material.dart';
+import 'package:states_rebuilder/states_rebuilder.dart';
 
-import '../core.dart' as core;
+import '../../../core/themes.dart';
 
 class MyHomepage extends StatelessWidget {
   const MyHomepage({Key? key}) : super(key: key);
@@ -23,39 +26,46 @@ class MyHomepage extends StatelessWidget {
               Icons.settings,
             ),
           ),
+          AppSelectorToggle()
         ],
       ),
       body: Center(
         child: Stack(
           children: [
-            Expanded(
-              child: Container(
-                width: size.width,
-                height: size.height,
-                color: core.color,
-              ),
+            Container(
+              width: size.width,
+              height: size.height,
+              color: color,
             ),
-            for (final eachColor in core.colors)
-              Positioned(
-                left: Random().nextInt(size.width.toInt()).toDouble(),
-                top: Random().nextInt(size.height.toInt()).toDouble(),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: eachColor,
-                    ),
-                    onPressed: () {
-                      core.colorUpdate = eachColor;
-                    },
-                    child: Text(
-                      '$eachColor',
-                    ),
-                  ),
-                ),
-              ),
+            AppSelector(),
+
+            // for (final eachColor in colors)
+            //   Positioned(
+            //     left: Random().nextInt(size.width.toInt()).toDouble(),
+            //     top: Random().nextInt(size.height.toInt()).toDouble(),
+            //     child: Padding(
+            //       padding: const EdgeInsets.all(8.0),
+            //       child: ElevatedButton(
+            //         style: ElevatedButton.styleFrom(
+            //           backgroundColor: eachColor,
+            //         ),
+            //         onPressed: () {
+            //           color = eachColor;
+            //         },
+            //         child: Text(
+            //           '$eachColor',
+            //         ),
+            //       ),
+            //     ),
+            //   ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          RM.navigate.to(AddBPEntry());
+        },
+        child: Icon(Icons.add),
       ),
     );
   }

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:dashboard/apps/hospitalApp/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
@@ -22,8 +23,7 @@ class TestUI extends ReactiveStatelessWidget {
                     bloodPressuresRM.state = [
                       ...bloodPressuresRM.state,
                       BloodPressureEntry(
-                          systolicBP: 120,
-                          diastolicBP: 80,
+                          bloodPressure: BloodPressure(diastolicBP: 80, systolicBP: 120),
                           patientID: 'patientID',
                           dateTaken: DateTime.now(),
                           bloodPressureType: BloodPressureType.dangerouslyLow)
@@ -55,22 +55,22 @@ class TestUI extends ReactiveStatelessWidget {
         body: Column(
           children: bloodPressuresRM.state
               .map(
-                (e) => ListTile(
-                  title: Text(e.patientID),
-                  subtitle: Text('${e.systolicBP}/${e.diastolicBP}'),
+                (bpE) => ListTile(
+                  title: Text(bpE.patientID),
+                  subtitle: Text('${bpE.bloodPressure.systolicBP}/${bpE.bloodPressure.diastolicBP}'),
                   trailing: DropdownButton<BloodPressureType>(
-                    value: e.bloodPressureType,
+                    value: bpE.bloodPressureType,
                     items: BloodPressureType.values
                         .map(
-                          (e) => DropdownMenuItem(
-                            value: e,
+                          (BloodPressureType bpT) => DropdownMenuItem(
+                            value: bpT,
                             child: Text(
-                              e.name,
+                              bpT.name,
                             ),
                           ),
                         )
                         .toList(),
-                    onChanged: e.updateBloodPressureType,
+                    onChanged: (v) => bpE.copyWith(bloodPressureType: v),
                   ),
                 ),
               )

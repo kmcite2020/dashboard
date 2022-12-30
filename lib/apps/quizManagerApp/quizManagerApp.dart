@@ -16,7 +16,7 @@ class QuizManagerApp extends ReactiveStatelessWidget {
           'Quiz Management',
         ),
         actions: [
-          const HideAppSelector(),
+          const AppSelectorToggle(),
         ],
       ),
       body: Column(

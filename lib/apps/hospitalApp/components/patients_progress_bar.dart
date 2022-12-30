@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors, unused_import, prefer_const_literals_to_create_immutables
 
+import 'package:dashboard/core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 import '../core/core.dart';
+import '../core/doctorOnDuty.dart';
 import 'widgets.dart';
 
 class PatientsProgressBar extends ReactiveStatelessWidget {
@@ -12,16 +14,20 @@ class PatientsProgressBar extends ReactiveStatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(padding),
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            borderRadius,
+          ),
+        ),
         clipBehavior: Clip.hardEdge,
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
             LinearProgressIndicator(
               minHeight: 40,
-              // value: admittedPatients.keys.length / admissionsCapacity.value,
+              value: patients.length / admissionsCapacity,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

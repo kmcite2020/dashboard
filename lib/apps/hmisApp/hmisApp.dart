@@ -7,45 +7,11 @@ import 'package:states_rebuilder/states_rebuilder.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../core/themes.dart';
-import 'HiveStore.dart';
 import 'features/testing/ui.dart';
 
-class HMIS extends TopStatelessWidget {
+class HMIS extends StatelessWidget {
   @override
-  ensureInitialization() => [
-        Future.delayed(
-          Duration(
-            seconds: 3,
-          ),
-        ),
-        RM.storageInitializer(
-          HiveStore(),
-        )
-      ];
-  @override
-  Widget? splashScreen() => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: Center(
-            child: Icon(
-              Icons.local_hospital,
-              size: 170,
-            ),
-          ),
-        ),
-      );
-
-  @override
-  Widget build(BuildContext context) => OnReactive(
-        () => MaterialApp(
-          navigatorKey: RM.navigate.navigatorKey,
-          debugShowCheckedModeBanner: false,
-          theme: theme,
-          darkTheme: darkTheme,
-          themeMode: themeMode,
-          home: TestingPage(),
-        ),
-      );
+  Widget build(BuildContext context) => TestingPage();
 }
 
 final nursesRM = RM.inject(() => []);

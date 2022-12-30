@@ -18,7 +18,8 @@ dependencies:
   colornames: 
   equatable:
   shared_preferences: 
-  get: 
+  intl:
+  path_provider:
   collection:
 dev_dependencies:
   flutter_test:
@@ -28,3 +29,4 @@ flutter:
   uses-material-design: true
   assets:
     - lib/assets/
+    - lib/assets/fonts/

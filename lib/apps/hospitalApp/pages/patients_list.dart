@@ -25,6 +25,7 @@ class PatientListView extends ReactiveStatelessWidget {
   Widget build(BuildContext context) {
     double topicsSize = 12;
     return Scaffold(
+      appBar: AppBar(),
       drawer: CustomDrawer(label),
       body: ListView(
         children: [
