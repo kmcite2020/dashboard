@@ -1,118 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:convert';
-
 import 'package:colornames/colornames.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
-import 'themes/darkThemeData.dart';
-import 'themes/lightThemeData.dart';
-import 'utils.dart';
-
-final dependers = {
-  themeModeRM,
-  fontRM,
-  colorRM,
-  paddingRM,
-  borderRadiusRM,
-};
-
-List<Widget> themingWidgets(size) {
-  return [
-    ThemeModeChanger(),
-    ColorChanger(size),
-    FontChanger(),
-    BorderRadiusChanger(),
-    PaddingChanger(),
-  ];
-}
-
-List<MaterialColor> get colors => Colors.primaries;
-List<String> get fonts {
-  return [
-    'Azeret Mono',
-    'Comfortaa',
-    'DM Mono',
-    'Dosis',
-    'Fira Sans',
-    'IBM Plex Mono',
-    'Josefin Sans',
-    'Montserrat',
-    'Space Mono',
-    'Ubuntu',
-  ];
-  // return GoogleFonts.asMap().keys.toList().take(100).toList();
-}
-
-List<ThemeMode> get themeModes => ThemeMode.values;
-double get appBarHeight {
-  if (padding <= 10) {
-    return 60;
-  } else if (padding <= 15 && padding > 10) {
-    return padding * 6;
-  } else {
-    return 90;
-  }
-}
-
-final themeModeRM = RM.inject<ThemeMode>(
-  () => ThemeMode.system,
-  persist: () => PersistState(
-    key: 'THEME-MODE',
-    toJson: (s) => jsonEncode(themeModes.indexOf(s)),
-    fromJson: (json) => themeModes[jsonDecode(json)],
-  ),
-);
-ThemeMode get themeMode => themeModeRM.state;
-set themeMode(value) => themeModeRM.state = value;
-
-final colorRM = RM.inject<MaterialColor>(
-  () => Colors.blue,
-  persist: () => PersistState(
-    key: 'COLOR',
-    toJson: (s) => jsonEncode(colors.indexOf(s)),
-    fromJson: (json) => colors[jsonDecode(json)],
-  ),
-);
-MaterialColor get color => colorRM.state;
-set color(value) => colorRM.state = value;
-
-final fontRM = RM.inject<String>(
-  () => fonts.first,
-  // persist: () => PersistState(
-  //   key: 'FONT',
-  // ),
-);
-String get font => fontRM.state;
-set font(value) => fontRM.state = value;
-
-final paddingRM = RM.inject<double>(
-  () => 10,
-  persist: () => PersistState(key: 'PADDING'),
-);
-double get padding => paddingRM.state;
-set padding(value) => paddingRM.state = value;
-
-final borderRadiusRM = RM.inject<double>(
-  () => 10,
-  persist: () => PersistState(key: "BORDER-RADIUS"),
-);
-double get borderRadius => borderRadiusRM.state;
-set borderRadius(value) => borderRadiusRM.state = value;
-
-final themeRM = RM.inject<ThemeData>(
-  // lightThemeData
-  () => lightThemeData, dependsOn: DependsOn(dependers),
-);
-ThemeData get theme => themeRM.state;
-
-final darkThemeRM = RM.inject(
-  () => darkThemeData,
-  dependsOn: DependsOn(dependers),
-);
-ThemeData get darkTheme => darkThemeRM.state;
+import '../reactiveModels.dart';
 
 class ThemeModeChanger extends ReactiveStatelessWidget {
   const ThemeModeChanger({super.key});
@@ -238,10 +131,10 @@ class FontChanger extends ReactiveStatelessWidget {
             onChanged: (value) => font = value,
             items: fonts
                 .map(
-                  (String eachFont) => DropdownMenuItem(
+                  (String? eachFont) => DropdownMenuItem(
                     value: eachFont,
                     child: Text(
-                      eachFont.toUpperCase(),
+                      eachFont!.toUpperCase(),
                       style: GoogleFonts.getFont(eachFont),
                     ),
                   ),

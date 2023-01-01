@@ -1,13 +1,25 @@
 // ignore_for_file: file_names, prefer_const_constructors
 import 'package:flutter/material.dart';
 
-import '../themes.dart';
-import '../utils.dart';
+import '../reactiveModels.dart';
 
 ThemeData get lightThemeData => ThemeData(
       listTileTheme: ListTileThemeData(
-        tileColor: color.shade100,
+        tileColor: color.shade200,
         selectedTileColor: color.shade400.withAlpha(200),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            borderRadius,
+          ),
+        ),
+      ),
+      cardTheme: CardTheme(
+        color: color.shade200,
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(borderRadius),
+        ),
+        margin: EdgeInsets.all(padding),
       ),
       // backgroundColor: Colors.blue,
       // bottomAppBarColor: Colors.blue,
@@ -49,7 +61,8 @@ ThemeData get lightThemeData => ThemeData(
       dialogTheme: DialogTheme(
         elevation: 10,
         backgroundColor: color.shade200,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius)),
       ),
       popupMenuTheme: PopupMenuThemeData(
         color: color,
@@ -59,7 +72,10 @@ ThemeData get lightThemeData => ThemeData(
           ),
         ),
       ),
-      appBarTheme: AppBarTheme(backgroundColor: color.shade100, elevation: 10, toolbarHeight: appBarHeight),
+      appBarTheme: AppBarTheme(
+          backgroundColor: color.shade100,
+          elevation: 10,
+          toolbarHeight: appBarHeight),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: color.shade900,
@@ -107,15 +123,8 @@ ThemeData get lightThemeData => ThemeData(
         ),
       ),
       colorSchemeSeed: color,
-      cardTheme: CardTheme(
-        color: color.shade300,
-        elevation: 10,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
-        margin: EdgeInsets.all(padding),
-      ),
+
       brightness: Brightness.light,
       useMaterial3: true,
-      fontFamily: googleFont(font),
+      fontFamily: getGoogleFont(font),
     );

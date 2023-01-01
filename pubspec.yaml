@@ -3,6 +3,7 @@ name: dashboard
 description: A new Flutter project.
 publish_to: 'none'
 version: 1.1.1+1
+homepage: https://github.com/kmcit2020/dashboard
 environment:
   sdk: '>=2.18.4 <3.0.0'
 dependencies:
@@ -13,6 +14,7 @@ dependencies:
   uuid:
   file_picker:
   material_design_icons_flutter: 
+  font_awesome_flutter:
   states_rebuilder:
   google_fonts: 
   colornames: 

@@ -1,31 +1,116 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_returning_null_for_void, file_names
 
-import 'dart:io';
-
-import 'package:dashboard/apps/HiveDB/databasePage.dart';
-import 'package:dashboard/core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 import '../../core/apps.dart';
-import '../../core/utils.dart';
+import '../../core/reactiveModels.dart';
 import 'core.dart';
-import 'databaseDetails.dart';
 
+@immutable
 class HiveDB extends ReactiveStatelessWidget {
   const HiveDB({super.key});
   @override
   Widget build(BuildContext context) {
-    return MyHomePage();
+    return Scaffold(
+      body: [HiveExplorer(), HiveEditor()][0],
+    );
   }
 }
 
+final indexRM = 0.inj();
+
 @immutable
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+class HiveEditor extends ReactiveStatelessWidget {
+  const HiveEditor({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('HIVE EDITOR')),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(
+              'Hive Editor',
+            ),
+            Text(
+              'Add List of Data to HiveDB',
+            ),
+            Text(
+              'Add Map of Data to HiveDB',
+            ),
+            Text(
+              'Hive Editor',
+            ),
+            Text(
+              'Hive Editor',
+            ),
+            Text(
+              'Hive Editor',
+            ),
+            Text(
+              'Hive Editor',
+            ),
+            Text(
+              'Hive Editor',
+            ),
+            Text(
+              'Hive Editor',
+            ),
+            Text(
+              'Hive Editor',
+            ),
+            Text(
+              'Hive Editor',
+            ),
+            Text(
+              'Hive Editor',
+            ),
+            Text(
+              'Hive Editor',
+            ),
+            Text(
+              'Hive Editor',
+            ),
+            Text(
+              'Hive Editor',
+            ),
+            Text(
+              'Hive Editor',
+            ),
+            Text(
+              'Hive Editor',
+            ),
+            ListView.builder(
+              physics: BouncingScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: indexRM.state + 1,
+              itemBuilder: (_, __) => ListTile(
+                title: TextField(),
+                subtitle: TextField(
+                  controller: asd.controller,
+                ),
+                trailing: IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    indexRM.state++;
+                  },
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+final asd = RM.injectTextEditing();
+
+@immutable
+class HiveExplorer extends StatelessWidget {
+  const HiveExplorer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +126,6 @@ class MyHomePage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          AppSelector(),
           Padding(
             padding: EdgeInsets.all(padding),
             child: Text('Please look for file ending with .hive and select it.', textScaleFactor: 1.5),

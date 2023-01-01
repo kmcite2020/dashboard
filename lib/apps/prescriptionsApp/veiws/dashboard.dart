@@ -1,10 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_interpolation_to_compose_strings, unused_local_variable, prefer_typing_uninitialized_variables, use_key_in_widget_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'account_manager.dart';
-import 'drawer.dart';
-import 'prescription_info.dart';
-import 'prescriptions.dart';
 
 class Dashboard extends StatelessWidget {
   static const icon = Icon(Icons.dashboard);
@@ -12,7 +8,6 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: CustomDrawer(),
       body: SafeArea(
         child: ListView(
           children: [

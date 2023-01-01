@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, file_names
 
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
+
 import '../../core/apps.dart';
+import 'question_controller.dart';
 import 'questionScreen.dart';
-import 'quizCore.dart';
 
 class QuizApp extends StatelessWidget {
   const QuizApp({super.key});
@@ -15,7 +16,7 @@ class QuizApp extends StatelessWidget {
       appBar: AppBar(
         title: Text('Quiz App'),
         actions: [
-          const AppSelectorToggle(),
+          AppSelectorToggle(),
         ],
       ),
       body: Column(
@@ -23,23 +24,19 @@ class QuizApp extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Hello to My Quiz App',
-              textScaleFactor: 4,
-            ),
+            child: Text('Hello to My Quiz App', textScaleFactor: 4),
           ),
-          Spacer(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
               onPressed: () {
-                RM.navigate.to(QuestionScreen(
-                  questions: questions,
-                ));
+                RM.navigate.to(
+                  QuestionScreen(
+                    questions: questions,
+                  ),
+                );
               },
-              child: Text(
-                'Start The Quiz',
-              ),
+              child: Text('Start The Quiz'),
             ),
           ),
         ],

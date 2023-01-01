@@ -67,25 +67,6 @@ class Login extends ReactiveStatelessWidget {
           physics: BouncingScrollPhysics(),
           child: Column(
             children: [
-              // for (final eachAccount in ManagerAccounts().accountsRM.state)
-              //   Card(
-              //   child: ListTile(
-              //     onTap: () {
-              //       // TODO add login functinality
-              //     },
-              //     onLongPress: () {
-              //       // TODO remove user from saved accounts
-              //     },
-              //     title: Text(eachAccount.id),
-              //     subtitle: Row(
-              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //       children: [
-              //         Text(eachAccount.name),
-              //         Text(eachAccount.password),
-              //       ],
-              //     ),
-              //   ),
-              // ),
               SizedBox(
                 height: 5,
               ),
@@ -105,10 +86,13 @@ class Login extends ReactiveStatelessWidget {
                 children: [
                   TextButton(onPressed: () {}, child: Text('forgot password')),
                   TextButton(
-                      onPressed: () {
-                        // SignUp.open(context);
-                      },
-                      child: Text('Sign Up')),
+                    onPressed: () {
+                      // SignUp.open(context);
+                    },
+                    child: Text(
+                      'Sign Up',
+                    ),
+                  ),
                 ],
               ),
               Padding(

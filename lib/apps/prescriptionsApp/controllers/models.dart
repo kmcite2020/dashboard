@@ -56,6 +56,16 @@ class Prescription extends Equatable {
     required this.doctor,
   });
 
+  static List<Prescription> fromListJson(String source) {
+    final List result = json.decode(source) as List;
+    return result.map((e) => Prescription.fromJson(e)).toList();
+  }
+
+  static String toListJson(List<Prescription> users) {
+    final List result = users.map((e) => e.toJson()).toList();
+    return json.encode(result);
+  }
+
   Prescription copyWith({
     String? prescriptionId,
     Patient? patient,
@@ -90,7 +100,7 @@ class Prescription extends Equatable {
       prescriptionId: map['prescriptionId'] as String,
       patient: Patient.fromMap(map['patient'] as Map<String, dynamic>),
       medicines: List<Medicine>.from(
-        (map['medicines'] as List<int>).map<Medicine>(
+        (map['medicines']).map<Medicine>(
           (x) => Medicine.fromMap(x as Map<String, dynamic>),
         ),
       ),
@@ -232,6 +242,15 @@ class Patient extends Equatable {
     required this.id,
     required this.name,
   });
+  static List<Patient> fromListJson(String source) {
+    final List result = json.decode(source) as List;
+    return result.map((e) => Patient.fromJson(e)).toList();
+  }
+
+  static String toListJson(List<Patient> users) {
+    final List result = users.map((e) => e.toJson()).toList();
+    return json.encode(result);
+  }
 
   @override
   List<Object> get props => [id, name];

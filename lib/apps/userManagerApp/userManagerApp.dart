@@ -1,12 +1,14 @@
-// ignore_for_file: prefer_const_constructors, await_only_futures, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, await_only_futures, prefer_const_literals_to_create_immutables, file_names
 
-import 'package:dashboard/apps/prayersApp/features/authentication/authentication.dart';
+import 'package:dashboard/core/authentication/authentication.dart';
 import 'package:dashboard/core/apps.dart';
-import 'package:dashboard/core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:states_rebuilder/scr/state_management/rm.dart';
+import 'package:states_rebuilder/states_rebuilder.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../core/reactiveModels.dart';
 
 class UserManagerApp extends ReactiveStatelessWidget {
   const UserManagerApp({super.key});
@@ -20,7 +22,6 @@ class UserManagerApp extends ReactiveStatelessWidget {
       ),
       body: ListView(
         children: [
-          AppSelector(),
           for (final eachUser in users)
             Padding(
               padding: EdgeInsets.all(padding),
@@ -31,9 +32,11 @@ class UserManagerApp extends ReactiveStatelessWidget {
                     leading: CircleAvatar(
                       child: Text('${eachUser.age.inDays ~/ 365}'),
                     ),
-                    title: Text(
-                      eachUser.email,
-                      textScaleFactor: .75,
+                    title: Center(
+                      child: Text(
+                        eachUser.email,
+                        textScaleFactor: .75,
+                      ),
                     ),
                     subtitle: Column(
                       children: [
@@ -41,16 +44,16 @@ class UserManagerApp extends ReactiveStatelessWidget {
                           eachUser.password,
                           textScaleFactor: .75,
                         ),
-                        Text("${eachUser.farzPrayers.inDays * 5}"),
-                        Text(
-                          eachUser.name.toString(),
-                        ),
-                        Text(DateFormat('d-M-y').format(eachUser.dateOfBirth)),
-                        Text(
-                          DateFormat('d-M-y').format(
-                            eachUser.dateOfPuberty ?? DateTime.now(),
-                          ),
-                        )
+                        // Text("${eachUser.farzPrayers.inDays * 5}"),
+                        // Text(
+                        //   eachUser.name.toString(),
+                        // ),
+                        // Text(DateFormat('d-M-y').format(eachUser.dateOfBirth)),
+                        // Text(
+                        //   DateFormat('d-M-y').format(
+                        //     eachUser.dateOfPuberty ?? DateTime.now(),
+                        //   ),
+                        // )
                       ],
                     ),
                   ),
@@ -90,11 +93,65 @@ class UserManagerApp extends ReactiveStatelessWidget {
   }
 }
 
-class UserDetails extends StatelessWidget {
-  const UserDetails({required this.userModel, super.key});
+class UserDetails extends ReactiveStatelessWidget {
+  UserDetails({required this.userModel, super.key});
   final UserModel userModel;
+  final visible = false.inj();
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(userModel.name.toString()),
+      ),
+      body: Card(
+        child: Center(
+          child: Column(
+            children: [
+              Text(userModel.email),
+              Text(userModel.password),
+              Text(userModel.dateOfBirth.toIso8601String()),
+              Text(userModel.dateOfPuberty.toString()),
+              Text(userModel.farzPrayers.toString()),
+              Text(
+                userModel.age.toString(),
+              ),
+              Column(
+                children: [
+                  visible.state
+                      ? Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Expanded(
+                              flex: 4,
+                              child: TextFormField(
+                                onFieldSubmitted: (value) {
+                                  userModel.copyWith(name: value);
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: TextButton(
+                                onPressed: visible.toggle,
+                                child: Text(
+                                  'HIDE',
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      : ElevatedButton(
+                          onPressed: visible.toggle,
+                          child: Text(
+                            'EDIT NAME',
+                          ),
+                        ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -1,6 +1,6 @@
 // ignore_for_file: override_on_non_overriding_member, prefer_const_constructors, use_key_in_widget_constructors, must_be_immutable
 
-import 'package:dashboard/core/themes.dart';
+import 'package:dashboard/core/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/scr/state_management/rm.dart';
 

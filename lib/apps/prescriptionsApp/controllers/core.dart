@@ -12,14 +12,18 @@ import 'package:uuid/uuid.dart';
 import '../veiws/add_prescription.dart';
 import '../prescriptionsApp.dart';
 import '../veiws/prescriptions.dart';
-import '../veiws/settings.dart';
 import 'models.dart';
 
-final data = Hive.box('data');
-final settings = Hive.box('settings');
-final prescriptionsRM = RM.inject(() => <Prescription>[]);
-List<Prescription> get prescriptions => prescriptionsRM.state;
-set prescriptions(value) => prescriptionsRM.state = value;
+final _prescriptions = RM.inject<List<Prescription>>(
+  () => <Prescription>[],
+  persist: () => PersistState(
+    key: 'prescriptions',
+    toJson: (s) => Prescription.toListJson(s),
+    fromJson: (json) => Prescription.fromListJson(json),
+  ),
+);
+List<Prescription> get prescriptions => _prescriptions.state;
+set prescriptions(value) => _prescriptions.state = value;
 
 ///FORM
 final addPrescriptionForm = RM.injectForm(
@@ -30,7 +34,7 @@ final addPrescriptionForm = RM.injectForm(
     // print(passwordRM.value);
   },
 );
-addPrescription() {
+void addPrescription() {
   String prescriptionId = Uuid().v1();
   String patientId = Uuid().v1();
   String doctorId = Uuid().v1();
@@ -40,7 +44,9 @@ addPrescription() {
     Prescription(
       prescriptionId: prescriptionId,
       patient: Patient(id: patientId, name: 'Adnan'),
-      medicines: [Medicine(medicine: 'Ceftriaxone')],
+      medicines: [
+        Medicine(medicine: 'Ceftriaxone'),
+      ],
       dateOfPrescription: DateTime.now(),
       diagnosis: Diagnosis(description: '', diagnosis: 'CCF', diagnosisId: diagnosisId),
       doctor: Doctor(
@@ -51,6 +57,19 @@ addPrescription() {
       ),
     )
   ];
+}
+
+void deletePrescription(Prescription prescription) {
+  if (prescriptions.contains(prescription)) {
+    print('prescription found');
+    prescriptions = [
+      for (final eachPrescription in prescriptions)
+        if (prescription != eachPrescription) eachPrescription
+    ];
+    print('prescription deleted');
+  } else {
+    print('prescription not found');
+  }
 }
 
 final patientName = RM.injectTextEditing();

@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_returning_null_for_void
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_returning_null_for_void, file_names
 
-import 'package:dashboard/core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
+
+import '../../core/reactiveModels.dart';
+import '../../core/themes/darkThemeData.dart';
+import '../../core/themes/lightThemeData.dart';
 import 'Homepage.dart';
 
 class GoogleFontsViewerApp extends ReactiveStatelessWidget {
@@ -13,8 +14,8 @@ class GoogleFontsViewerApp extends ReactiveStatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: theme,
-      darkTheme: darkTheme,
+      theme: lightThemeData,
+      darkTheme: darkThemeData,
       themeMode: themeMode,
       home: MyHomePage(),
     );

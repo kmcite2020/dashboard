@@ -1,10 +1,10 @@
-// ignore_for_file: prefer_const_constructors, must_be_immutable
+// ignore_for_file: prefer_const_constructors, must_be_immutable, file_names
 
-import 'package:dashboard/apps/prayersApp/features/authentication/authentication.dart';
-import 'package:dashboard/apps/prayersApp/features/authentication/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
+import '../../core/authentication/login/login.dart';
+import '../../core/reactiveModels.dart';
 import 'features/home/home.dart';
 
 class PrayersApp extends ReactiveStatelessWidget {
@@ -14,13 +14,6 @@ class PrayersApp extends ReactiveStatelessWidget {
   Widget build(BuildContext context) => authenticated ? Home() : LoginForm();
 }
 
-bool get authenticated {
-  if (currentUser != null) {
-    return true;
-  } else {
-    return false;
-  }
-}
 
 
 /// init start set loading

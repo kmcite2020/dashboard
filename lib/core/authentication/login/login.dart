@@ -1,13 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace
 
-import 'package:dashboard/apps/prayersApp/features/authentication/authentication.dart';
-import 'package:dashboard/core/apps.dart';
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
-import '../../../../../core/themes.dart';
-import '../../../core/widgets.dart';
-import '../register/register.dart';
+import '../../../apps/prayersApp/core/widgets.dart';
+import '../../apps.dart';
+import '../../reactiveModels.dart';
+import '../authentication.dart';
 
 class LoginForm extends ReactiveStatelessWidget {
   LoginForm({key}) : super(key: key);
@@ -20,20 +19,6 @@ class LoginForm extends ReactiveStatelessWidget {
       listenTo: loginForm,
       builder: () {
         return Scaffold(
-          appBar: AppBar(
-            title: Text('Login'),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  RM.navigate.to(
-                    RegisterForm(),
-                  );
-                },
-                icon: Icon(Icons.open_in_new),
-              ),
-              AppSelectorToggle()
-            ],
-          ),
           body: Stack(
             children: [
               BackgroundWidget(size),
@@ -47,6 +32,9 @@ class LoginForm extends ReactiveStatelessWidget {
                         Padding(
                           padding: EdgeInsets.all(padding),
                           child: TextFormField(
+                            // TODO - ability to add user from login page if not found in repository, may be going to register page from here
+                            // TODO - add ability to goto REGISTER page. when no users are added in repository.
+                            // TODO - Sigup Support
                             controller: emailLoginForm.controller,
                             focusNode: emailLoginForm.focusNode,
                             decoration: InputDecoration(
@@ -72,40 +60,26 @@ class LoginForm extends ReactiveStatelessWidget {
                               errorText: passwordLoginForm.error,
                             ),
                             obscureText: obscure.state,
+                            textInputAction: TextInputAction.done,
+                            onFieldSubmitted: (_) => loginForm.submit(),
                           ),
                         ),
-                        // Padding(
-                        //   padding: EdgeInsets.all(padding),
-                        //   child: ElevatedButton.icon(
-                        //     icon: Icon(Icons.login),
-                        //     onPressed: passwordController.value.isEmpty || emailController.value.isEmpty
-                        //         ? null
-                        //         : () {
-                        //             signInWithEmail(email: emailController.value, password: passwordController.value, context: context);
-                        //           },
-                        //     label: Text(
-                        //       'Sign in',
-                        //     ),
-                        //   ),
-                        // ),
-                        // Padding(
-                        //   padding: EdgeInsets.all(padding),
-                        //   child: ElevatedButton.icon(
-                        //     icon: Icon(Icons.password),
-                        //     onPressed: emailController.value.isEmpty
-                        //         ? null
-                        //         : () {
-                        //             auth.sendPasswordResetEmail(email: emailController.value);
-                        //           },
-                        //     label: Text(
-                        //       'Reset Password',
-                        //     ),
-                        //   ),
-                        // ),
                         Padding(
                           padding: EdgeInsets.all(padding),
-                          child: ElevatedButton(onPressed: loginForm.isValid ? loginForm.submit : null, child: Text('Login')),
-                        )
+                          child: ElevatedButton(
+                            onPressed: loginForm.isValid ? loginForm.submit : null,
+                            child: Text('Login'),
+                          ),
+                        ),
+                        Divider(),
+                        for (final eachApp in Apps.values)
+                          Card(
+                            child: ListTile(
+                              title: Text(
+                                eachApp.description,
+                              ),
+                            ),
+                          )
                       ],
                     ),
                   ),

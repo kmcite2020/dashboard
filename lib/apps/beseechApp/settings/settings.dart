@@ -2,12 +2,12 @@
 
 import 'dart:math';
 
-import 'package:dashboard/core/themes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
+import '../../../core/themes/themes.dart';
 import '../beseechApp.dart';
 import '../core.dart';
 import 'about.dart';

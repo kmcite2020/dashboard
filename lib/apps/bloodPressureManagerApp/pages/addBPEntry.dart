@@ -1,7 +1,8 @@
 // ignore_for_file: file_names, prefer_const_constructors
-import 'package:dashboard/core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
+
+import '../../../core/reactiveModels.dart';
 
 class AddBPEntry extends ReactiveStatelessWidget {
   const AddBPEntry({super.key});

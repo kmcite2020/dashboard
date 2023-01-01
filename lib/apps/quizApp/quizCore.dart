@@ -12,56 +12,61 @@ final questionsRM = RM.inject<List<Question>>(
       id: Uuid().v1(),
       question: 'What is hell',
       options: [
-        Option(option: 'love', index: 0),
-        Option(option: 'hate', index: 1),
-        Option(option: 'death', index: 2),
+        'A  ',
+        'S',
+        'SD',
       ],
-      correctOptionIndex: 1,
+      answerIndex: 1,
+      explaination: 'null',
     ),
   ],
 );
-List<Question> get questions => questionsRM.state;
-set questions(value) => questionsRM.state = value;
+// List<Question> get questions => questionsRM.state;
+// set questions(value) => questionsRM.state = value;
 
-addQuestion() {
-  questions = [
-    ...questions,
-    Question(
-      id: Uuid().v1(),
-      question: 'What is hell',
-      options: [
-        Option(option: 'love', index: 0),
-        Option(option: 'hate', index: 1),
-        Option(option: 'death', index: 2),
-      ],
-      correctOptionIndex: 1,
-    ),
-  ];
-}
+// addQuestion() {
+//   questions = [
+//     ...questions,
+//     Question(
+//       id: Uuid().v1(),
+//       question: 'What is hell',
+//       options: [
+//         Option(option: 'love', index: 0),
+//         Option(option: 'hate', index: 1),
+//         Option(option: 'death', index: 2),
+//       ],
+//       correctOptionIndex: 1,
+//     ),
+//   ];
+// }
 
 class Question extends Equatable {
   final String id;
   final String question;
-  final List<Option> options;
-  final int correctOptionIndex;
+  final List<String> options;
+  final int answerIndex;
+  final String explaination;
   const Question({
     required this.id,
     required this.question,
     required this.options,
-    required this.correctOptionIndex,
+    required this.answerIndex,
+    required this.explaination,
   });
 
   Question copyWith({
     String? id,
     String? question,
-    List<Option>? options,
-    int? correctOptionIndex,
+    List<String>? options,
+    int? answerIndex,
+    String? explaination,
   }) {
     return Question(
       id: id ?? this.id,
       question: question ?? this.question,
       options: options ?? this.options,
-      correctOptionIndex: correctOptionIndex ?? this.correctOptionIndex,
+      answerIndex: answerIndex ?? this.answerIndex,
+      explaination: explaination ?? this.explaination,
     );
   }
 
@@ -69,8 +74,9 @@ class Question extends Equatable {
     return <String, dynamic>{
       'id': id,
       'question': question,
-      'options': options.map((x) => x.toMap()).toList(),
-      'correctOptionIndex': correctOptionIndex,
+      'options': options,
+      'answerIndex': answerIndex,
+      'explaination': explaination,
     };
   }
 
@@ -78,12 +84,9 @@ class Question extends Equatable {
     return Question(
       id: map['id'] as String,
       question: map['question'] as String,
-      options: List<Option>.from(
-        (map['options'] as List<int>).map<Option>(
-          (x) => Option.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      correctOptionIndex: map['correctOptionIndex'] as int,
+      options: List<String>.from((map['options'] as List<String>)),
+      answerIndex: map['answerIndex'] as int,
+      explaination: map['explaination'] as String,
     );
   }
 
@@ -95,48 +98,13 @@ class Question extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [id, question, options, correctOptionIndex];
-}
-
-class Option extends Equatable {
-  final int index;
-  final String option;
-  const Option({
-    required this.index,
-    required this.option,
-  });
-
-  Option copyWith({
-    int? index,
-    String? option,
-  }) {
-    return Option(
-      index: index ?? this.index,
-      option: option ?? this.option,
-    );
+  List<Object> get props {
+    return [
+      id,
+      question,
+      options,
+      answerIndex,
+      explaination,
+    ];
   }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'index': index,
-      'option': option,
-    };
-  }
-
-  factory Option.fromMap(Map<String, dynamic> map) {
-    return Option(
-      index: map['index'] as int,
-      option: map['option'] as String,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory Option.fromJson(String source) => Option.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object> get props => [index, option];
 }

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
-import '../../../core/themes.dart';
+import '../../../core/reactiveModels.dart';
 import 'dashboard.dart';
 
 class Settings extends ReactiveStatelessWidget {

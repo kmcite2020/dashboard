@@ -2,7 +2,6 @@
 
 import 'dart:developer';
 
-import 'package:dashboard/core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';

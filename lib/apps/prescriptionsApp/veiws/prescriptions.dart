@@ -3,28 +3,27 @@
 import 'dart:developer';
 import 'dart:math';
 
-import 'package:dashboard/core/apps.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:states_rebuilder/states_rebuilder.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../core/themes.dart';
+import '../../../core/apps.dart';
+import '../../../core/reactiveModels.dart';
+import '../../../core/themes/themes.dart';
 import '../controllers/core.dart';
 import '../prescriptionsApp.dart';
 import 'account_manager.dart';
 import 'add_prescription.dart';
-import 'drawer.dart';
 import 'medicines.dart';
 import 'prescription_info.dart';
-import 'settings.dart';
 
-class Prescriptions extends StatelessWidget {
+class Prescriptions extends ReactiveStatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double size = 18;
     return Scaffold(
-      drawer: CustomDrawer(),
       body: SafeArea(
         child: ListView(
           children: [
@@ -35,25 +34,18 @@ class Prescriptions extends StatelessWidget {
             SizedBox(height: 5),
             for (final prescription in prescriptions)
               InkWell(
-                // highlightColor: colors[settingController.color][400],
-                // hoverColor: colors[settingController.color][200],
-                // focusColor: colors[settingController.color][500],
-                // splashColor: colors[settingController.color][800],
-                // borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(5),
                 onTap: () {
                   // Get.to(PrescriptionInfo(id: prescription['id']));
                 },
                 child: Container(
                   margin: EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(width: 2),
+                    borderRadius: BorderRadius.circular(borderRadius),
                     shape: BoxShape.rectangle,
-                    // color: colors[settingController.color][400],
                   ),
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // Padding(
@@ -70,10 +62,23 @@ class Prescriptions extends StatelessWidget {
                       //         prescription["frequency"],
                       //   ),
                       // ),
+                      // Text(prescription.prescriptionId),
+                      // Text(prescription.dateOfPrescription.toString()),
+                      // Text(prescription.diagnosis.diagnosis),
+                      Padding(
+                        padding: EdgeInsets.all(padding),
+                        child: Text(prescription.toJson()),
+                      ),
+                      // Text(prescription.prescriptionId),
+                      // Text(prescription.prescriptionId),
+
+                      // Text(prescription.doctor.name),
+                      // Text(prescription.doctor.department),
+                      // Text(prescription.doctor.hospital),
                       IconButton(
                         icon: Icon(Icons.delete),
                         onPressed: () {
-                          // deletePrescription(prescription['id']);
+                          deletePrescription(prescription);
                         },
                       ),
                     ],
@@ -89,6 +94,8 @@ class Prescriptions extends StatelessWidget {
           // Get.to(
           // () => AddPrescription(),
           // );
+
+          addPrescription();
         },
         icon: Icon(Icons.add_box),
         label: Text('Add Prescription'),

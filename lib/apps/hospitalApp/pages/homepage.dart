@@ -31,7 +31,6 @@ class Homepage extends ReactiveStatelessWidget {
       ),
       drawer: CustomDrawer('Homepage'),
       body: ListView(children: [
-        AppSelector(),
         // TimePickerDialog(initialTime: TimeOfDay.now()),
         // DatePickerDialog(initialDate: DateTime.now(), firstDate: DateTime(1996), lastDate: DateTime.now()),
         // patients.isEmpty ? SizedBox() : Text('data'),

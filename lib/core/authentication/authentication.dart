@@ -5,57 +5,49 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
-final currentUserRM = RM.inject<UserModel?>(
-  () => null,
-  persist: () => PersistState(
-    key: 'CURRENT_USER',
-    toJson: (s) => s!.toJson(),
-    fromJson: (json) => UserModel.fromJson(json),
-    throttleDelay: 100,
-    debugPrintOperations: true,
-    catchPersistError: true,
-  ),
-  dependsOn: DependsOn({
-    usersRM,
-  }),
-  autoDisposeWhenNotUsed: false,
-);
-set currentUser(value) => currentUserRM.state = value;
-UserModel? get currentUser => currentUserRM.state;
+import '../reactiveModels.dart';
+
 final loginForm = RM.injectForm(
   autovalidateMode: AutovalidateMode.always,
   submit: () async {
     for (final eachUser in users) {
       if (eachUser.email == emailLoginForm.value) {
         print('${emailLoginForm.value} Match found');
-        currentUser = eachUser;
-        return;
+        if (eachUser.password == passwordLoginForm.value) {
+          print('password matched');
+          currentUser = eachUser;
+          return;
+        } else {
+          print('password did not match');
+          return;
+        }
       } else {
-        print('waiting');
+        print('waiting...');
       }
     }
+    print('no match found');
   },
 );
 final registerForm = RM.injectForm(
   autovalidateMode: AutovalidateMode.always,
   submit: () async {
-    users = [
-      ...users,
-      UserModel(
-        name: nameFF.value,
-        email: emailRegisterForm.value,
-        password: passwordRegisterForm.value,
-        dateOfBirth: dateOfBirthFF.value,
-        dateOfPuberty: dateOfPubertyFF.value,
-      ),
-    ];
+    UserModel tempUSER = UserModel(
+      name: nameFF.value,
+      email: emailRegisterForm.value,
+      password: passwordRegisterForm.value,
+      dateOfBirth: dateOfBirthFF.value,
+      dateOfPuberty: dateOfPubertyFF.value,
+    );
+    users = [...users, tempUSER];
+    currentUser = tempUSER;
+    RM.navigate.back();
   },
 );
 
 final usersRM = RM.inject<List<UserModel>>(
   () => <UserModel>[],
   persist: () => PersistState(
-    key: 'USERS',
+    key: 'users',
     toJson: (s) => UserModel.toListJson(s),
     fromJson: (json) => UserModel.fromListJson(json),
   ),
@@ -128,7 +120,8 @@ class UserModel extends Equatable {
       return DateTime.now().difference(dateOfPuberty!);
     } else {
       if (age.inDays > 13 * 365) {
-        return DateTime.now().difference(dateOfBirth.add(Duration(days: 13 * 365)));
+        return DateTime.now()
+            .difference(dateOfBirth.add(Duration(days: 13 * 365)));
       }
     }
 
@@ -189,14 +182,18 @@ class UserModel extends Equatable {
       email: map['email'] as String,
       name: map['name'] != null ? map['name'] as String : null,
       password: map['password'] as String,
-      dateOfBirth: DateTime.fromMillisecondsSinceEpoch(map['dateOfBirth'] as int),
-      dateOfPuberty: map['dateOfPuberty'] != null ? DateTime.fromMillisecondsSinceEpoch(map['dateOfPuberty'] as int) : null,
+      dateOfBirth:
+          DateTime.fromMillisecondsSinceEpoch(map['dateOfBirth'] as int),
+      dateOfPuberty: map['dateOfPuberty'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['dateOfPuberty'] as int)
+          : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserModel.fromJson(String source) =>
+      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool get stringify => true;

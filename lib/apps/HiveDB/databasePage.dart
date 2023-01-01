@@ -1,9 +1,10 @@
 // ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables
 import 'package:dashboard/apps/HiveDB/core.dart';
 import 'package:dashboard/apps/HiveDB/databaseDetails.dart';
-import 'package:dashboard/core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
+
+import '../../core/reactiveModels.dart';
 
 class DatabasePage extends ReactiveStatelessWidget {
   const DatabasePage({

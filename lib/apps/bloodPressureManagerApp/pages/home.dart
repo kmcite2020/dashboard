@@ -1,13 +1,14 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unused_import
 
 import 'dart:math';
 
-import 'package:dashboard/apps/bloodPressureManagerApp/pages/addBPEntry.dart';
-import 'package:dashboard/core/apps.dart';
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
-import '../../../core/themes.dart';
+import '../../../core/apps.dart';
+import '../../../core/reactiveModels.dart';
+import '../../../core/themes/themes.dart';
+import 'addBPEntry.dart';
 
 class MyHomepage extends StatelessWidget {
   const MyHomepage({Key? key}) : super(key: key);
@@ -37,7 +38,6 @@ class MyHomepage extends StatelessWidget {
               height: size.height,
               color: color,
             ),
-            AppSelector(),
 
             // for (final eachColor in colors)
             //   Positioned(

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
-import '../../../core/themes.dart';
+import '../../../core/reactiveModels.dart';
 import '../floater.dart';
 import '../settings/settings.dart';
 import '../settings/user_information.dart';
@@ -43,7 +43,6 @@ class Home extends ReactiveStatelessWidget {
       ),
       body: ListView(
         children: [
-          AppSelector(),
           PrayerCounterWidget(name: 'Fajr', count: fajrRM),
           PrayerCounterWidget(name: 'Zuhr', count: zuhrRM),
           PrayerCounterWidget(name: 'Asar', count: asarRM),

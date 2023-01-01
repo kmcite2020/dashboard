@@ -2,98 +2,108 @@
 
 import 'dart:async';
 
-import 'package:dashboard/apps/prayersApp/features/authentication/authentication.dart';
-import 'package:dashboard/assets/licenses.dart';
-import 'package:dashboard/core/themes/darkThemeData.dart';
-import 'package:dashboard/core/themes/lightThemeData.dart';
+import 'package:dashboard/core/authentication/register/register.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 import 'apps/idealApp/controllers/core.dart';
+import 'assets/licenses.dart';
 import 'core/apps.dart';
-import 'core/storage.dart';
-import 'core/themes.dart';
-import 'core/utils.dart';
+import 'core/authentication/authentication.dart';
+import 'core/authentication/login/login.dart';
+import 'core/reactiveModels.dart';
+import 'core/storage/hiveStorage.dart';
+import 'core/storage/sharedPreferences.dart';
+import 'core/themes/darkThemeData.dart';
+import 'core/themes/lightThemeData.dart';
+import 'core/themes/themes.dart';
 
 void main() async {
-  await Hive.initFlutter();
-  // TODO re-implement database name as there is dependency on internal app
-  // RM.deleteAllPersistState();
-  await Hive.openBox(database);
+  WidgetsFlutterBinding.ensureInitialized();
   GoogleFonts.config.allowRuntimeFetching = false;
   addLicenses();
-  // paddingRM.deletePersistState;
-  // RM.deleteAllPersistState();
   RM.navigate.transitionsBuilder = RM.transitions.leftToRight();
-  runApp(MyApp());
+  // await RM.storageInitializer(SharedPreferencesStore());
+  await RM.storageInitializer(HiveStorage());
+  await RM.storageInitializer(HiveStorage(name: 'SECTIONS'));
+  await initDefaultImage;
+  runApp(DASH());
 }
 
-class MyApp extends TopStatelessWidget {
-  @override
-  List<FutureOr<void>>? ensureInitialization() => [
-        Future.delayed(1.seconds),
-        initDefaultImage,
-        RM.storageInitializer(Storage()),
-      ];
-  @override
-  Widget? splashScreen() => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          backgroundColor: color[200],
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.apple_sharp,
-                  size: 250,
-                  color: Colors.purple,
-                ),
-                Text(
-                  'Apps - Dashboard',
-                  textScaleFactor: 3,
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-  @override
-  Widget errorScreen(error, void Function() refresh) {
-    return Scaffold(
-      backgroundColor: Color.fromARGB(255, 247, 0, 0),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              '💔',
-              textScaleFactor: 15,
-            ),
-            Text(
-              'Error',
-              textScaleFactor: 8,
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
+class DASH extends ReactiveStatelessWidget {
   @override
   Widget build(context) {
-    return OnReactive(
-      () => MaterialApp(
-        navigatorKey: RM.navigate.navigatorKey,
-        debugShowCheckedModeBanner: false,
-        theme: lightThemeData,
-        themeMode: themeMode,
-        darkTheme: darkThemeData,
-        home: runSelectedApp,
+    return MaterialApp(
+      navigatorKey: RM.navigate.navigatorKey,
+      debugShowCheckedModeBanner: false,
+      theme: lightThemeData,
+      themeMode: themeMode,
+      darkTheme: darkThemeData,
+      home: currentAppRM.onOrElse(
+              onWaiting: () => Center(child: CircularProgressIndicator()), onError: onError, onData: onData, orElse: (Apps? data) {})
+          ? runSelectedApp
+          : DASHBOARD(),
+    );
+  }
+}
+
+class DASHBOARD extends StatelessWidget {
+  const DASHBOARD({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'APPS',
+        ),
+        actions: [AppSelectorToggle()],
       ),
+      body: authenticated
+          ? GridView.count(
+              crossAxisCount: 3,
+              children: Apps.values.map(
+                (eachApp) {
+                  return Padding(
+                    padding: EdgeInsets.all(padding),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(borderRadius),
+                      onTap: () {
+                        currentApp = eachApp;
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(padding),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Icon(
+                              eachApp.iconData ?? MdiIcons.appsBox,
+                              size: 70,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(padding),
+                              decoration: BoxDecoration(
+                                border: Border.all(),
+                                borderRadius: BorderRadius.circular(borderRadius),
+                              ),
+                              child: Text(
+                                eachApp.description,
+                                textScaleFactor: .7,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ).toList(),
+            )
+          : LoginForm(),
     );
   }
 }
