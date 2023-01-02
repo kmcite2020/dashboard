@@ -8,17 +8,31 @@ import 'package:states_rebuilder/states_rebuilder.dart';
 import '../../core/apps.dart';
 import '../../core/reactiveModels.dart';
 
-class TimerApp extends ReactiveStatelessWidget {
-  TimerApp({super.key});
+class TimerApp extends StatefulWidget {
+  const TimerApp({super.key});
 
+  @override
+  State<TimerApp> createState() => _TimerAppState();
+}
+
+class _TimerAppState extends State<TimerApp> {
   late Timer timer;
-  final timeRM = RM.inject(() => 0);
-  set time(int _) => timeRM.state = _;
-  int get time => timeRM.state;
+
+  // final timeRM = RM.inject(() => 0);
+  int _time = 0;
+  set time(int _) {
+    setState(() {
+      _time = _;
+    });
+  }
+
+  int get time => _time;
+
   int maxTime = 1;
+
   void startTimer() {
     timer = Timer.periodic(
-      1.seconds,
+      17.milliseconds,
       (timer) {
         if (time < 1) {
           timer.cancel();

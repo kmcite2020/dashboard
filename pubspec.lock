@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
+  bilocator:
+    dependency: transitive
+    description:
+      name: bilocator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -217,6 +224,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+  mvvm_plus:
+    dependency: "direct main"
+    description:
+      name: mvvm_plus
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.6"
   navigation_builder:
     dependency: transitive
     description:

@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
+
 import '../../../core/reactiveModels.dart';
 import '../core.dart';
 
@@ -121,7 +122,11 @@ class DateManger extends ReactiveStatelessWidget {
   final String store;
   final show = false.inj(autoDisposeWhenNotUsed: false);
   final String name;
-  DateManger({required this.name, this.store = 'settings', required this.persistKey, required this.date});
+  DateManger(
+      {required this.name,
+      this.store = 'settings',
+      required this.persistKey,
+      required this.date});
   @override
   Widget build(BuildContext context) {
     return show.state
@@ -220,12 +225,17 @@ class DateManger extends ReactiveStatelessWidget {
 }
 
 class InlineEditor extends ReactiveStatelessWidget {
-  InlineEditor({required this.data, required this.persistKey, required this.persistState});
+  InlineEditor(
+      {required this.data,
+      required this.persistKey,
+      required this.persistState});
   String data;
   String persistKey;
   String persistState;
   final controller = TextEditingController();
-  final edit = RM.inject(() => false, debugPrintWhenNotifiedPreMessage: 'userNameState', autoDisposeWhenNotUsed: false);
+  final edit = RM.inject(() => false,
+      debugPrintWhenNotifiedPreMessage: 'userNameState',
+      autoDisposeWhenNotUsed: false);
   @override
   Widget build(BuildContext context) {
     controller.text = data;
@@ -256,7 +266,8 @@ class InlineEditor extends ReactiveStatelessWidget {
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: InkWell(
                           hoverColor: Colors.red,
-                          highlightColor: colors[Random().nextInt(colors.length)],
+                          highlightColor:
+                              colors[Random().nextInt(colors.length)],
                           focusColor: color,
                           splashColor: color,
                           borderRadius: BorderRadius.circular(20),
@@ -277,20 +288,16 @@ class InlineEditor extends ReactiveStatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: InkWell(
-                          highlightColor: colors[Random().nextInt(colors.length)],
+                          highlightColor:
+                              colors[Random().nextInt(colors.length)],
                           hoverColor: colors[Random().nextInt(colors.length)],
                           focusColor: color,
                           splashColor: color,
                           borderRadius: BorderRadius.circular(20),
                           onTap: () {
                             edit.state = false;
-                            // settings.put(persistState, false);
                             data = controller.text;
-                            // settings.put(persistKey, data);
                             print('$data saved');
-                            // print(
-                            //   settings.get(persistKey),
-                            // );
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
@@ -318,13 +325,11 @@ class InlineEditor extends ReactiveStatelessWidget {
                   splashColor: color,
                   onTap: () {
                     edit.state = true;
-                    // settings.put(persistState, true);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: Text(
-                        // settings.get(persistKey) ??
                         data,
                         textScaleFactor: 1.4,
                       ),

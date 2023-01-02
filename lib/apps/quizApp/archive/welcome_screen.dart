@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
+import 'package:dashboard/core/reactiveModels.dart';
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
-import 'constants.dart';
-import 'quiz_screen.dart';
+import '../quiz_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -12,7 +12,7 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+          padding: EdgeInsets.symmetric(horizontal: padding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -39,11 +39,11 @@ class WelcomeScreen extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
-                  padding: EdgeInsets.all(kDefaultPadding * 0.75), // 15
-                  decoration: BoxDecoration(
-                    gradient: kPrimaryGradient,
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
+                  // padding: EdgeInsets.all(kDefaultPadding * 0.75), // 15
+                  // decoration: BoxDecoration(
+                  //   gradient: kPrimaryGradient,
+                  //   borderRadius: BorderRadius.all(Radius.circular(12)),
+                  // ),
                   child: Text(
                     "Lets Start Quiz",
                     style: Theme.of(context).textTheme.button!.copyWith(color: Colors.black),

@@ -22,7 +22,7 @@ import 'authentication/authentication.dart';
 import '../apps/prayersApp/prayerApp.dart';
 import '../apps/prescriptionsApp/prescriptionsApp.dart';
 import '../apps/quizApp/quizApp.dart';
-import '../apps/quizManagerApp/addSectionForm.dart';
+import '../apps/quizManagerApp/app.dart';
 import '../apps/settingsApp/settingsApp.dart';
 import '../apps/taskManagerApp/taskManagerApp.dart';
 import '../apps/timerApp/timerApp.dart';

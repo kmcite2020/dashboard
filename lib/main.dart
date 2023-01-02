@@ -42,10 +42,7 @@ class DASH extends ReactiveStatelessWidget {
       theme: lightThemeData,
       themeMode: themeMode,
       darkTheme: darkThemeData,
-      home: currentAppRM.onOrElse(
-              onWaiting: () => Center(child: CircularProgressIndicator()), onError: onError, onData: onData, orElse: (Apps? data) {})
-          ? runSelectedApp
-          : DASHBOARD(),
+      home: authenticated ? runSelectedApp : DASHBOARD(),
     );
   }
 }

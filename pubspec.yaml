@@ -16,6 +16,7 @@ dependencies:
   material_design_icons_flutter: 
   font_awesome_flutter:
   states_rebuilder:
+  mvvm_plus:
   google_fonts: 
   colornames: 
   equatable:

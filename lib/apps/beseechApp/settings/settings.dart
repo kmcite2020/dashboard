@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
+import '../../../core/reactiveModels.dart';
 import '../../../core/themes/themes.dart';
 import '../beseechApp.dart';
 import '../core.dart';
@@ -42,12 +43,21 @@ class Settings extends ReactiveStatelessWidget {
         physics: BouncingScrollPhysics(),
         children: [
           SizedBox(height: 3),
-          UserInformation(),
-          ThemeModeChanger(),
-          ColorChanger(size),
-          FontChanger(),
-          PaddingChanger(),
-          BorderRadiusChanger(),
+          InkWell(
+            borderRadius: BorderRadius.circular(20),
+            focusColor: color,
+            splashColor: color,
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  "NAME: ${currentUser!.name}",
+                  textScaleFactor: 1.4,
+                ),
+              ),
+            ),
+          ),
           FeedbackTile(),
           Help(),
           About(),
