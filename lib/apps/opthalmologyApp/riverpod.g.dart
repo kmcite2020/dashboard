@@ -45,7 +45,6 @@ class GetBoxProvider extends AutoDisposeFutureProvider<Box<dynamic>> {
           debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product') ? null : _$getBoxHash,
         );
 
-  @override
   final String name;
 
   @override
