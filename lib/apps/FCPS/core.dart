@@ -36,7 +36,7 @@ final subscriptionRM = RM.inject<Subscription>(
     fromJson: (json) => Subscription.values[jsonDecode(json)],
   ),
 );
-Subscription get subscription => subscriptionRM.state;
+Subscription get subscription => subscriptionRM.state();
 set subscription(value) => subscriptionRM.state = value;
 
 DateTime startSubscription = DateTime.now();
@@ -77,7 +77,7 @@ openSubscriptions(context, String subscription) {
 // login implementation
 final _name = RM.inject(() => 'Adnan Farooq');
 
-String get name => _name.state;
+String get name => _name.state();
 
 set name(value) {
   _name.state = value;
@@ -85,7 +85,7 @@ set name(value) {
 
 final _email = RM.inject(() => 'adn@gmail.com');
 
-String get email => _email.state;
+String get email => _email.state();
 
 set email(value) {
   _email.state = value;
@@ -94,7 +94,7 @@ set email(value) {
 
 final _city = RM.inject(() => 'Swabi');
 
-String get city => _city.state;
+String get city => _city.state();
 
 set city(value) {
   _city.state = value;
@@ -254,7 +254,7 @@ void deleteAllDataFromDisk(context) {
 
 final _selectedCity = RM.inject(() => listOfCities.first);
 
-String? get selectedCity => _selectedCity.state;
+String? get selectedCity => _selectedCity.state();
 
 set selectedCity(value) {
   _selectedCity.state = value;

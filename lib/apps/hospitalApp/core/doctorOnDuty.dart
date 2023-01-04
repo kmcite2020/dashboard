@@ -7,7 +7,7 @@ final admissionsCapacityRM = RM.inject<int>(
     key: 'admissionCapacity007',
   ),
 );
-int get admissionsCapacity => admissionsCapacityRM.state;
+int get admissionsCapacity => admissionsCapacityRM.state();
 set admissionsCapacity(value) => admissionsCapacityRM.state = value;
 
 final doctorRM = RM.inject<String>(
@@ -16,7 +16,7 @@ final doctorRM = RM.inject<String>(
     key: 'doctor',
   ),
 );
-String get doctor => doctorRM.state;
+String get doctor => doctorRM.state();
 set doctor(value) => doctorRM.state = value;
 final wardRM = RM.inject<String>(
   () => "",
@@ -24,7 +24,7 @@ final wardRM = RM.inject<String>(
     key: 'ward-deptt',
   ),
 );
-String get ward => wardRM.state;
+String get ward => wardRM.state();
 set ward(value) => wardRM.state = value;
 final hospitalRM = RM.inject<String>(
   () => "",
@@ -32,5 +32,5 @@ final hospitalRM = RM.inject<String>(
     key: 'hospital',
   ),
 );
-String get hospital => hospitalRM.state;
+String get hospital => hospitalRM.state();
 set hospital(value) => hospitalRM.state = value;

@@ -24,17 +24,17 @@ class MedicineManager {
   final medicineRM = RM.injectTextEditing(autoDispose: false);
 
   /// getters
-  bool get editMedicine => editMedicineRM.state;
-  Map get medicines => medicinesRM.state;
+  bool get editMedicine => editMedicineRM.state();
+  Map get medicines => medicinesRM.state();
   String get medicine => medicineRM.value;
 
   /// functions
-  void addMedicineToList() => medicinesRM.state[medicineRM.value] = medicineRM.value;
-  void removeMedicineFromList(String medicine) => medicinesRM.state = medicinesRM.state.remove(medicine);
+  void addMedicineToList() => medicinesRM.state()[medicineRM.value] = medicineRM.value;
+  void removeMedicineFromList(String medicine) => medicinesRM.state = medicinesRM.state().remove(medicine);
 }
 
 final medicineManagerRM = RM.inject(() => MedicineManager());
-MedicineManager get medicineManager => medicineManagerRM.state;
+MedicineManager get medicineManager => medicineManagerRM.state();
 
 class Medicines extends ReactiveStatelessWidget {
   @override
@@ -65,7 +65,7 @@ class Medicines extends ReactiveStatelessWidget {
                     ),
                   )
                 : SizedBox(),
-            for (final medicine in medicinesRM.state.values)
+            for (final medicine in medicinesRM.state().values)
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: Card(

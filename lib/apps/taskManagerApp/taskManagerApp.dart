@@ -110,17 +110,17 @@ class TaskManagerApp extends ReactiveStatelessWidget {
           ),
           CheckboxListTile(
             title: Text('Always on top'),
-            value: alwaysOnTopRM.state,
+            value: alwaysOnTopRM.state(),
             onChanged: (v) => alwaysOnTopRM.state = v!,
           ),
           CheckboxListTile(
             title: Text('Minimize on use'),
-            value: minimizeOnUseRM.state,
+            value: minimizeOnUseRM.state(),
             onChanged: (v) => minimizeOnUseRM.state = v!,
           ),
           CheckboxListTile(
             title: Text('Hide when minimized'),
-            value: hideWhenMinimizedRM.state,
+            value: hideWhenMinimizedRM.state(),
             onChanged: (v) => hideWhenMinimizedRM.state = v!,
           ),
           Padding(
@@ -132,12 +132,12 @@ class TaskManagerApp extends ReactiveStatelessWidget {
           ),
           CheckboxListTile(
             title: Text('Show full account name'),
-            value: showFullAccountNameRM.state,
+            value: showFullAccountNameRM.state(),
             onChanged: (v) => showFullAccountNameRM.state = v!,
           ),
           CheckboxListTile(
             title: Text('Show history for all processes'),
-            value: showHistoryForAllProcessesRM.state,
+            value: showHistoryForAllProcessesRM.state(),
             onChanged: (v) => showHistoryForAllProcessesRM.state = v!,
           ),
         ],
@@ -147,13 +147,13 @@ class TaskManagerApp extends ReactiveStatelessWidget {
           RM.navigate.to(
             NextPage(
               {
-                "defaultStartPageFieldRM": defaultStartPageFieldRM.state,
-                "realtimeUpdateSpeedRM": realtimeUpdateSpeedRM.state,
-                "alwaysOnTopRM": alwaysOnTopRM.state,
-                "minimizeOnUseRM": minimizeOnUseRM.state,
-                "hideWhenMinimizedRM": hideWhenMinimizedRM.state,
-                "showFullAccountNameRM": showFullAccountNameRM.state,
-                "showHistoryForAllProcessesRM": showHistoryForAllProcessesRM.state,
+                "defaultStartPageFieldRM": defaultStartPageFieldRM.state(),
+                "realtimeUpdateSpeedRM": realtimeUpdateSpeedRM.state(),
+                "alwaysOnTopRM": alwaysOnTopRM.state(),
+                "minimizeOnUseRM": minimizeOnUseRM.state(),
+                "hideWhenMinimizedRM": hideWhenMinimizedRM.state(),
+                "showFullAccountNameRM": showFullAccountNameRM.state(),
+                "showHistoryForAllProcessesRM": showHistoryForAllProcessesRM.state(),
               },
             ),
           );

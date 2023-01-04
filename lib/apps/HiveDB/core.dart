@@ -8,7 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
-Box get currentDB => databaseRM.state;
+Box get currentDB => databaseRM.state();
 bool get isWaiting => databaseRM.isWaiting;
 bool get hasError => databaseRM.hasError;
 String get error => databaseRM.error.message;
@@ -17,7 +17,7 @@ final databaseRM = RM.inject<Box>(
 );
 Future<void> openBox() async {
   try {
-    databaseRM.stateAsync = Hive.openBox(currentFileRM.state);
+    databaseRM.stateAsync = Hive.openBox(currentFileRM.state());
     RM.navigate.to(DatabasePage());
   } catch (e) {
     print(e.toString());
@@ -26,7 +26,7 @@ Future<void> openBox() async {
 
 final currentFileRM = RM.inject<String>(() => 'DEFAULT');
 
-List<FileSystemEntity> get files => filesRM.state;
+List<FileSystemEntity> get files => filesRM.state();
 final filesRM = RM.injectFuture(getFilesInDocumentsDirectory);
 Future<List<FileSystemEntity>> getFilesInDocumentsDirectory() async {
   Directory directory = await getApplicationDocumentsDirectory();

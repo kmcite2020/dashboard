@@ -21,7 +21,7 @@ class TestUI extends ReactiveStatelessWidget {
                   child: Text('Add New Entry'),
                   onPressed: () {
                     bloodPressuresRM.state = [
-                      ...bloodPressuresRM.state,
+                      ...bloodPressuresRM.state(),
                       BloodPressureEntry(
                           bloodPressure: BloodPressure(diastolicBP: 80, systolicBP: 120),
                           patientID: 'patientID',
@@ -53,7 +53,8 @@ class TestUI extends ReactiveStatelessWidget {
           ),
         ),
         body: Column(
-          children: bloodPressuresRM.state
+          children: bloodPressuresRM
+              .state()
               .map(
                 (bpE) => ListTile(
                   title: Text(bpE.patientID),

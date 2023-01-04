@@ -85,7 +85,7 @@ class HiveEditor extends ReactiveStatelessWidget {
             ListView.builder(
               physics: BouncingScrollPhysics(),
               shrinkWrap: true,
-              itemCount: indexRM.state + 1,
+              itemCount: indexRM.state() + 1,
               itemBuilder: (_, __) => ListTile(
                 title: TextField(),
                 subtitle: TextField(
@@ -135,7 +135,7 @@ class HiveExplorer extends StatelessWidget {
           else
             for (final file in files)
               ListTile(
-                selected: currentFileRM.state == file.uri.pathSegments.last.split('.hive').first,
+                selected: currentFileRM.state() == file.uri.pathSegments.last.split('.hive').first,
                 onTap: () {
                   currentFileRM.state = file.uri.pathSegments.last.split('.hive').first;
                 },

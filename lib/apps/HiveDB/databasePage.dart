@@ -14,7 +14,7 @@ class DatabasePage extends ReactiveStatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("${databaseRM.state.name}-${databaseRM.state.length} entries"),
+        title: Text("${databaseRM.state().name}-${databaseRM.state().length} entries"),
       ),
       body: ListView(
         children: [
@@ -22,7 +22,7 @@ class DatabasePage extends ReactiveStatelessWidget {
             padding: EdgeInsets.all(padding),
             child: ElevatedButton(
               onPressed: () {
-                databaseRM.state.clear();
+                databaseRM.state().clear();
               },
               child: Text('CLEAR DATABASE'),
             ),

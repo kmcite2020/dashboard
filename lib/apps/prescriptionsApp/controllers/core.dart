@@ -22,7 +22,7 @@ final _prescriptions = RM.inject<List<Prescription>>(
     fromJson: (json) => Prescription.fromListJson(json),
   ),
 );
-List<Prescription> get prescriptions => _prescriptions.state;
+List<Prescription> get prescriptions => _prescriptions.state();
 set prescriptions(value) => _prescriptions.state = value;
 
 ///FORM

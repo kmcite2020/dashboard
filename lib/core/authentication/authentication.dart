@@ -1,31 +1,31 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, file_names, unused_local_variable, prefer_const_constructors
-import 'dart:convert';
+import "dart:convert";
 
-import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:states_rebuilder/states_rebuilder.dart';
+import "package:equatable/equatable.dart";
+import "package:flutter/cupertino.dart";
+import "package:states_rebuilder/states_rebuilder.dart";
 
-import '../reactiveModels.dart';
+import "../reactiveModels.dart";
 
 final loginForm = RM.injectForm(
   autovalidateMode: AutovalidateMode.always,
   submit: () async {
     for (final eachUser in users) {
       if (eachUser.email == emailLoginForm.value) {
-        print('${emailLoginForm.value} Match found');
+        print("${emailLoginForm.value} Match found");
         if (eachUser.password == passwordLoginForm.value) {
-          print('password matched');
+          print("password matched");
           currentUser = eachUser;
           return;
         } else {
-          print('password did not match');
+          print("password did not match");
           return;
         }
       } else {
-        print('waiting...');
+        print("waiting...");
       }
     }
-    print('no match found');
+    print("no match found");
   },
 );
 final registerForm = RM.injectForm(
@@ -47,12 +47,12 @@ final registerForm = RM.injectForm(
 final usersRM = RM.inject<List<UserModel>>(
   () => <UserModel>[],
   persist: () => PersistState(
-    key: 'users',
+    key: "users",
     toJson: (s) => UserModel.toListJson(s),
     fromJson: (json) => UserModel.fromListJson(json),
   ),
 );
-List<UserModel> get users => usersRM.state;
+List<UserModel> get users => usersRM.state();
 set users(value) => usersRM.state = value;
 
 final emailLoginForm = RM.injectTextEditing(
@@ -63,7 +63,7 @@ final emailLoginForm = RM.injectTextEditing(
           return null;
         }
       }
-      return 'user not available in repository';
+      return "user not available in repository";
     }
   ],
 );
@@ -72,7 +72,7 @@ final emailRegisterForm = RM.injectTextEditing(
     (text) {
       for (final eachUser in users) {
         if (text == eachUser.email) {
-          return 'user already exists';
+          return "user already exists";
         }
       }
       return null;
@@ -83,7 +83,7 @@ final passwordLoginForm = RM.injectTextEditing(
   validators: [
     (text) {
       if (text!.isEmpty) {
-        return 'passwords can not be empty';
+        return "passwords can not be empty";
       }
       return null;
     }
@@ -93,7 +93,7 @@ final passwordRegisterForm = RM.injectTextEditing(
   validators: [
     (text) {
       if (text!.isEmpty) {
-        return 'passwords can not be empty';
+        return "passwords can not be empty";
       }
       return null;
     }
@@ -105,7 +105,7 @@ final dateOfBirthFF = RM.injectFormField(
   validators: [
     (date) {
       if (DateTime.now().difference(date).inDays < 13 * 365) {
-        return 'Your age is ${DateTime.now().difference(date).inDays ~/ 365} years.';
+        return "Your age is ${DateTime.now().difference(date).inDays ~/ 365} years.";
       }
       return null;
     }
@@ -120,8 +120,7 @@ class UserModel extends Equatable {
       return DateTime.now().difference(dateOfPuberty!);
     } else {
       if (age.inDays > 13 * 365) {
-        return DateTime.now()
-            .difference(dateOfBirth.add(Duration(days: 13 * 365)));
+        return DateTime.now().difference(dateOfBirth.add(Duration(days: 13 * 365)));
       }
     }
 
@@ -169,31 +168,27 @@ class UserModel extends Equatable {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'email': email,
-      'name': name,
-      'password': password,
-      'dateOfBirth': dateOfBirth.millisecondsSinceEpoch,
-      'dateOfPuberty': dateOfPuberty?.millisecondsSinceEpoch,
+      "email": email,
+      "name": name,
+      "password": password,
+      "dateOfBirth": dateOfBirth.millisecondsSinceEpoch,
+      "dateOfPuberty": dateOfPuberty?.millisecondsSinceEpoch,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      email: map['email'] as String,
-      name: map['name'] != null ? map['name'] as String : null,
-      password: map['password'] as String,
-      dateOfBirth:
-          DateTime.fromMillisecondsSinceEpoch(map['dateOfBirth'] as int),
-      dateOfPuberty: map['dateOfPuberty'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['dateOfPuberty'] as int)
-          : null,
+      email: map["email"] as String,
+      name: map["name"] != null ? map["name"] as String : null,
+      password: map["password"] as String,
+      dateOfBirth: DateTime.fromMillisecondsSinceEpoch(map["dateOfBirth"] as int),
+      dateOfPuberty: map["dateOfPuberty"] != null ? DateTime.fromMillisecondsSinceEpoch(map["dateOfPuberty"] as int) : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory UserModel.fromJson(String source) =>
-      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool get stringify => true;

@@ -113,7 +113,7 @@ class InLineEditor extends ReactiveStatelessWidget {
     return Card(
       child: Column(
         children: [
-          edit.state
+          edit.state()
               ? Padding(
                   padding: EdgeInsets.all(8),
                   child: TextFormField(
@@ -129,7 +129,7 @@ class InLineEditor extends ReactiveStatelessWidget {
                   subtitle: info,
                   trailing: trailing,
                 ),
-          edit.state
+          edit.state()
               ? Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(

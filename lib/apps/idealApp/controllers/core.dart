@@ -4,7 +4,7 @@ import 'package:states_rebuilder/states_rebuilder.dart';
 final databaseRM = RM.inject(
   () => "DEFAULT",
 );
-String get database => databaseRM.state;
+String get database => databaseRM.state();
 set database(value) => databaseRM.state = value;
 
 late Uint8List defaultImage;

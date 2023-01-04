@@ -1,9 +1,9 @@
 // ignore_for_file: file_names
-import 'dart:convert';
+import "dart:convert";
 
-import 'package:equatable/equatable.dart';
+import "package:equatable/equatable.dart";
 
-import '../apps/hospitalApp/core/core.dart';
+import "../apps/hospitalApp/core/core.dart";
 
 class Patient extends Equatable {
   final String id;
@@ -37,7 +37,7 @@ class Patient extends Equatable {
   });
   @override
   String toString() {
-    return '$id, $name, $disease, $pulse';
+    return "$id, $name, $disease, $pulse";
   }
 
   Patient copyWith({
@@ -74,45 +74,45 @@ class Patient extends Equatable {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
-      'name': name,
-      'age': age.inDays,
-      'gender': Gender.values.indexOf(gender),
-      'complaints': complaints.map((x) => x.toMap()).toList(),
-      'history': history,
-      'pulse': pulse,
-      'saturation': saturation,
-      'temperature': temperature,
-      'bloodPressure': bloodPressure.toMap(),
-      'investigation': investigation.map((x) => x.toMap()).toList(),
-      'managements': managements,
-      'disease': disease,
+      "id": id,
+      "name": name,
+      "age": age.inDays,
+      "gender": Gender.values.indexOf(gender),
+      "complaints": complaints.map((x) => x.toMap()).toList(),
+      "history": history,
+      "pulse": pulse,
+      "saturation": saturation,
+      "temperature": temperature,
+      "bloodPressure": bloodPressure.toMap(),
+      "investigation": investigation.map((x) => x.toMap()).toList(),
+      "managements": managements,
+      "disease": disease,
     };
   }
 
   factory Patient.fromMap(Map<String, dynamic> map) {
     return Patient(
-      id: map['id'] as String,
-      name: map['name'] as String,
-      age: Duration(days: map['age']),
-      gender: Gender.values[map['gender']],
+      id: map["id"] as String,
+      name: map["name"] as String,
+      age: Duration(days: map["age"]),
+      gender: Gender.values[map["gender"]],
       complaints: List<Complaint>.from(
-        (map['complaints'] as List<int>).map<Complaint>(
+        (map["complaints"] as List<int>).map<Complaint>(
           (x) => Complaint.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      history: List<String>.from((map['history'] as List<String>)),
-      pulse: map['pulse'] as int,
-      saturation: map['saturation'] as int,
-      temperature: map['temperature'] as double,
-      bloodPressure: BloodPressure.fromMap(map['bloodPressure'] as Map<String, dynamic>),
+      history: List<String>.from((map["history"] as List<String>)),
+      pulse: map["pulse"] as int,
+      saturation: map["saturation"] as int,
+      temperature: map["temperature"] as double,
+      bloodPressure: BloodPressure.fromMap(map["bloodPressure"] as Map<String, dynamic>),
       investigation: List<Investigation>.from(
-        (map['investigation'] as List<int>).map<Investigation>(
+        (map["investigation"] as List<int>).map<Investigation>(
           (x) => Investigation.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      managements: List<String>.from((map['managements'] as List<String>)),
-      disease: map['disease'] as String,
+      managements: List<String>.from((map["managements"] as List<String>)),
+      disease: map["disease"] as String,
     );
   }
 

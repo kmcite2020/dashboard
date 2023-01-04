@@ -15,7 +15,7 @@ final BPsRM = RM.inject<List<BloodPressureEntry>>(
     fromJson: (json) => BloodPressureEntry.fromListJson(json),
   ),
 );
-List<BloodPressureEntry> get BPs => BPsRM.state;
+List<BloodPressureEntry> get BPs => BPsRM.state();
 set addBPEntry(bp) {
   BPsRM.state = [...BPs, bp];
 }

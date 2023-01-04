@@ -1,21 +1,21 @@
 // ignore_for_file: prefer_const_constructors, file_names
 
-import 'dart:convert';
+import "dart:convert";
 
-import 'package:dashboard/core/authentication/authentication.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:states_rebuilder/states_rebuilder.dart';
-import 'package:uuid/uuid.dart';
+import "package:dashboard/core/authentication/authentication.dart";
+import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
+import "package:states_rebuilder/states_rebuilder.dart";
+import "package:uuid/uuid.dart";
 
-import 'apps.dart';
-import 'authentication/userInformations.dart';
-import 'themes/themes.dart';
+import "apps.dart";
+import "authentication/userInformations.dart";
+import "themes/themes.dart";
 
 final _currentUser = RM.inject<UserModel?>(
   () => null,
   persist: () => PersistState(
-    key: 'currentUser',
+    key: "currentUser",
     toJson: (s) => s!.toJson(),
     fromJson: (json) => UserModel.fromJson(json),
   ),
@@ -25,7 +25,7 @@ final _currentUser = RM.inject<UserModel?>(
   autoDisposeWhenNotUsed: false,
 );
 set currentUser(value) => _currentUser.state = value;
-UserModel? get currentUser => _currentUser.state;
+UserModel? get currentUser => _currentUser.state();
 
 final currentAppRM = RM.inject<Apps?>(
   () => null,
@@ -35,13 +35,13 @@ final currentAppRM = RM.inject<Apps?>(
   //   fromJson: (json) => Apps.values[jsonDecode(json)],
   // ),
 );
-Apps? get currentApp => currentAppRM.state;
+Apps? get currentApp => currentAppRM.state();
 set currentApp(value) => currentAppRM.state = value;
 
 final _themeMode = RM.inject<ThemeMode>(
   () => ThemeMode.system,
   persist: () => PersistState(
-    key: 'themeMode',
+    key: "themeMode",
     toJson: (s) => jsonEncode(themeModes.indexOf(s)),
     fromJson: (json) => themeModes[jsonDecode(json)],
   ),
@@ -50,7 +50,7 @@ final _themeMode = RM.inject<ThemeMode>(
 final _color = RM.inject<MaterialColor>(
   () => Colors.blue,
   persist: () => PersistState(
-    key: 'color',
+    key: "color",
     toJson: (s) => jsonEncode(colors.indexOf(s)),
     fromJson: (json) => colors[jsonDecode(json)],
   ),
@@ -58,12 +58,12 @@ final _color = RM.inject<MaterialColor>(
 
 final _font = RM.inject<String>(
   () => fonts.first,
-  persist: () => PersistState(key: 'font'),
+  persist: () => PersistState(key: "font"),
 );
 
 final _padding = RM.inject<double>(
   () => 10,
-  persist: () => PersistState(key: 'padding'),
+  persist: () => PersistState(key: "padding"),
 );
 
 final _borderRadius = RM.inject<double>(
@@ -83,38 +83,38 @@ final _borderRadius = RM.inject<double>(
 // );
 // ThemeData get darkTheme => darkThemeRM.state;
 
-ThemeMode get themeMode => _themeMode.state;
+ThemeMode get themeMode => _themeMode.state();
 set themeMode(value) => _themeMode.state = value;
 List<ThemeMode> get themeModes => ThemeMode.values;
 
-MaterialColor get color => _color.state;
+MaterialColor get color => _color.state();
 set color(value) => _color.state = value;
 List<MaterialColor> get colors => Colors.primaries;
 
-String get font => _font.state;
+String get font => _font.state();
 
 set font(value) => _font.state = value;
 
 List<String> get fonts {
   return [
-    'Azeret Mono',
-    'Comfortaa',
-    'DM Mono',
-    'Dosis',
-    'Fira Sans',
-    'IBM Plex Mono',
-    'Josefin Sans',
-    'Montserrat',
-    'Space Mono',
-    'Ubuntu',
+    "Azeret Mono",
+    "Comfortaa",
+    "DM Mono",
+    "Dosis",
+    "Fira Sans",
+    "IBM Plex Mono",
+    "Josefin Sans",
+    "Montserrat",
+    "Space Mono",
+    "Ubuntu",
   ];
 }
 
 // String googleFont(String font) {}
 
-double get borderRadius => _borderRadius.state;
+double get borderRadius => _borderRadius.state();
 set borderRadius(value) => _borderRadius.state = value;
-double get padding => _padding.state;
+double get padding => _padding.state();
 set padding(value) => _padding.state = value;
 
 /// UTILS

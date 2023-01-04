@@ -39,7 +39,7 @@ class Initialize extends ReactiveStatelessWidget {
             children: [
               Text('NAME'),
               InlineEditor(
-                data: username.state,
+                data: username.state(),
                 persistKey: 'username',
                 persistState: 'usernameState',
               ),

@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace
 
-import 'package:flutter/material.dart';
-import 'package:states_rebuilder/states_rebuilder.dart';
+import "package:flutter/material.dart";
+import "package:states_rebuilder/states_rebuilder.dart";
 
-import '../../../apps/prayersApp/core/widgets.dart';
-import '../../apps.dart';
-import '../../reactiveModels.dart';
-import '../authentication.dart';
+import "../../../apps/prayersApp/core/widgets.dart";
+import "../../apps.dart";
+import "../../reactiveModels.dart";
+import "../authentication.dart";
 
 class LoginForm extends ReactiveStatelessWidget {
   LoginForm({key}) : super(key: key);
@@ -38,7 +38,7 @@ class LoginForm extends ReactiveStatelessWidget {
                             controller: emailLoginForm.controller,
                             focusNode: emailLoginForm.focusNode,
                             decoration: InputDecoration(
-                              labelText: 'Type email',
+                              labelText: "Type email",
                               errorText: emailLoginForm.error,
                             ),
                           ),
@@ -49,17 +49,17 @@ class LoginForm extends ReactiveStatelessWidget {
                             controller: passwordLoginForm.controller,
                             focusNode: passwordLoginForm.focusNode,
                             decoration: InputDecoration(
-                              labelText: 'Type password',
+                              labelText: "Type password",
                               suffixIcon: Padding(
                                 padding: EdgeInsets.all(padding),
                                 child: IconButton(
                                   onPressed: () => obscure.toggle(),
-                                  icon: Icon(obscure.state ? Icons.visibility : Icons.visibility_off),
+                                  icon: Icon(obscure.state() ? Icons.visibility : Icons.visibility_off),
                                 ),
                               ),
                               errorText: passwordLoginForm.error,
                             ),
-                            obscureText: obscure.state,
+                            obscureText: obscure.state(),
                             textInputAction: TextInputAction.done,
                             onFieldSubmitted: (_) => loginForm.submit(),
                           ),
@@ -68,7 +68,7 @@ class LoginForm extends ReactiveStatelessWidget {
                           padding: EdgeInsets.all(padding),
                           child: ElevatedButton(
                             onPressed: loginForm.isValid ? loginForm.submit : null,
-                            child: Text('Login'),
+                            child: Text("Login"),
                           ),
                         ),
                         Divider(),

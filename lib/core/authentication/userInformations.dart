@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, file_names
 
-import 'package:dashboard/apps/idealApp/controllers/core.dart';
-import 'package:flutter/material.dart';
-import 'package:states_rebuilder/states_rebuilder.dart';
+import "package:dashboard/apps/idealApp/controllers/core.dart";
+import "package:flutter/material.dart";
+import "package:states_rebuilder/states_rebuilder.dart";
 
-import '../reactiveModels.dart';
+import "../reactiveModels.dart";
 
 class UserInformations extends ReactiveStatelessWidget {
   const UserInformations({Key? key}) : super(key: key);
@@ -13,7 +13,7 @@ class UserInformations extends ReactiveStatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        title: Text('ACCOUNT SETTINGS'),
+        title: Text("ACCOUNT SETTINGS"),
         subtitle: currentUser != null
             ? Column(
                 children: [
@@ -55,7 +55,7 @@ class UserInformations extends ReactiveStatelessWidget {
                     child: ElevatedButton(
                       onPressed: signout,
                       child: Text(
-                        'SIGN OUT',
+                        "SIGN OUT",
                       ),
                     ),
                   ),
@@ -65,13 +65,13 @@ class UserInformations extends ReactiveStatelessWidget {
                       style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).errorColor),
                       onPressed: () async {},
                       child: Text(
-                        'DELETE ACCOUNT permanently',
+                        "DELETE ACCOUNT permanently",
                       ),
                     ),
                   ),
                 ],
               )
-            : Text('no user is signed in'),
+            : Text("no user is signed in"),
       ),
     );
   }

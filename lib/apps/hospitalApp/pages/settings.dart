@@ -109,7 +109,7 @@ class UserInfo extends ReactiveStatelessWidget {
   final edit = false.inj(autoDisposeWhenNotUsed: false);
   @override
   Widget build(BuildContext context) {
-    return edit.state
+    return edit.state()
         ? Container(
             //EDIT
             decoration: BoxDecoration(

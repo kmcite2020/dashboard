@@ -14,7 +14,7 @@ final patientsRM = RM.inject<List<Patient>>(
   ),
 );
 
-List<Patient> get patients => patientsRM.state;
+List<Patient> get patients => patientsRM.state();
 set patients(List<Patient> value) => patientsRM.state = value;
 set addPatient(Patient patient) => patients = [...patients, patient];
 set removePatient(Patient patient) => patients = [

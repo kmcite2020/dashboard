@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_element, avoid_print, avoid_unnecessary_containers
 
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:states_rebuilder/states_rebuilder.dart';
+import "package:flutter/material.dart";
+import "package:intl/intl.dart";
+import "package:states_rebuilder/states_rebuilder.dart";
 
-import '../../reactiveModels.dart';
-import '../../../apps/prayersApp/core/widgets.dart';
-import '../authentication.dart';
+import "../../reactiveModels.dart";
+import "../../../apps/prayersApp/core/widgets.dart";
+import "../authentication.dart";
 
 class RegisterForm extends ReactiveStatelessWidget {
   RegisterForm({key}) : super(key: key);
@@ -17,7 +17,7 @@ class RegisterForm extends ReactiveStatelessWidget {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register - enter your details'),
+        title: Text("Register - enter your details"),
       ),
       body: Stack(
         children: [
@@ -41,7 +41,7 @@ class RegisterForm extends ReactiveStatelessWidget {
                               controller: nameFF.controller,
                               focusNode: nameFF.focusNode,
                               decoration: InputDecoration(
-                                labelText: 'Type name',
+                                labelText: "Type name",
                                 errorText: nameFF.error,
                               ),
                             ),
@@ -52,7 +52,7 @@ class RegisterForm extends ReactiveStatelessWidget {
                               controller: emailRegisterForm.controller,
                               focusNode: emailRegisterForm.focusNode,
                               decoration: InputDecoration(
-                                labelText: 'Type email',
+                                labelText: "Type email",
                                 errorText: emailRegisterForm.error,
                               ),
                             ),
@@ -63,17 +63,17 @@ class RegisterForm extends ReactiveStatelessWidget {
                               controller: passwordRegisterForm.controller,
                               focusNode: passwordRegisterForm.focusNode,
                               decoration: InputDecoration(
-                                labelText: 'Type password',
+                                labelText: "Type password",
                                 suffixIcon: Padding(
                                   padding: EdgeInsets.all(padding),
                                   child: IconButton(
                                     onPressed: () => obscure.toggle(),
-                                    icon: Icon(obscure.state ? Icons.visibility : Icons.visibility_off),
+                                    icon: Icon(obscure.state() ? Icons.visibility : Icons.visibility_off),
                                   ),
                                 ),
                                 errorText: passwordRegisterForm.error,
                               ),
-                              obscureText: obscure.state,
+                              obscureText: obscure.state(),
                             ),
                           ),
                           OnFormFieldBuilder(
@@ -96,7 +96,7 @@ class RegisterForm extends ReactiveStatelessWidget {
                                       dateOfBirthFF.value = cache;
                                     }
                                   },
-                                  child: Text(DateFormat('d-M-y').format(_)),
+                                  child: Text(DateFormat("d-M-y").format(_)),
                                 ),
                               );
                             },
@@ -121,7 +121,7 @@ class RegisterForm extends ReactiveStatelessWidget {
                                       dateOfPubertyFF.value = cache;
                                     }
                                   },
-                                  child: Text(DateFormat('d-M-y').format(_)),
+                                  child: Text(DateFormat("d-M-y").format(_)),
                                 ),
                               );
                             },
@@ -129,7 +129,7 @@ class RegisterForm extends ReactiveStatelessWidget {
                           Padding(
                             padding: EdgeInsets.all(padding),
                             child: ListTile(
-                              title: Text('Your age is'),
+                              title: Text("Your age is"),
                               subtitle: Text(
                                 "${DateTime.now().difference(dateOfBirthFF.value).inDays ~/ 365} years",
                                 textScaleFactor: 1.7,
@@ -141,7 +141,7 @@ class RegisterForm extends ReactiveStatelessWidget {
                             child: ElevatedButton.icon(
                               onPressed: registerForm.isValid ? registerForm.submit : null,
                               icon: Icon(Icons.people),
-                              label: Text('Register'),
+                              label: Text("Register"),
                             ),
                           )
                         ],

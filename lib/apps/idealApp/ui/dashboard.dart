@@ -82,7 +82,7 @@ class Dashboard extends ReactiveStatelessWidget {
                 title: Text(
                   'TOTAL CUSTOMERS AVAILABLE',
                 ),
-                trailing: Text(customers.state.length.toString()),
+                trailing: Text(customers.state().length.toString()),
               ),
             ),
             Card(

@@ -140,7 +140,7 @@ class Customers extends ReactiveStatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                customers.state.isEmpty
+                customers.state().isEmpty
                     ? Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
@@ -149,7 +149,7 @@ class Customers extends ReactiveStatelessWidget {
                         ),
                       )
                     : SizedBox(),
-                for (final CustomerModel value in customers.state)
+                for (final CustomerModel value in customers.state())
                   ListTile(
                     onLongPress: () {
                       removeCustomers(value.id);

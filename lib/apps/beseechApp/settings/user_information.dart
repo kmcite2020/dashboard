@@ -9,7 +9,7 @@ import '../../../core/reactiveModels.dart';
 import '../core.dart';
 
 final _currentDateTime = RM.inject<DateTime>(() => DateTime.now());
-Duration get age => _currentDateTime.state.difference(birth.state);
+Duration get age => _currentDateTime.state().difference(birth.state());
 
 class UserInformation extends StatelessWidget {
   const UserInformation({
@@ -26,7 +26,7 @@ class UserInformation extends StatelessWidget {
           Divider(),
           Text('NAME'),
           InlineEditor(
-            data: username.state,
+            data: username.state(),
             persistKey: 'username',
             persistState: 'usernameState',
           ),
@@ -122,14 +122,10 @@ class DateManger extends ReactiveStatelessWidget {
   final String store;
   final show = false.inj(autoDisposeWhenNotUsed: false);
   final String name;
-  DateManger(
-      {required this.name,
-      this.store = 'settings',
-      required this.persistKey,
-      required this.date});
+  DateManger({required this.name, this.store = 'settings', required this.persistKey, required this.date});
   @override
   Widget build(BuildContext context) {
-    return show.state
+    return show.state()
         ? Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -137,7 +133,7 @@ class DateManger extends ReactiveStatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                      "${date.state.day.toString().length == 1 ? '0' : ''}${date.state.day}/${date.state.month.toString().length == 1 ? '0' : ''}${date.state.month}/${date.state.year}"),
+                      "${date.state().day.toString().length == 1 ? '0' : ''}${date.state().day}/${date.state().month.toString().length == 1 ? '0' : ''}${date.state().month}/${date.state().year}"),
                 ),
               ),
               Row(
@@ -153,7 +149,7 @@ class DateManger extends ReactiveStatelessWidget {
                       date.state = await showDatePicker(
                         initialEntryMode: DatePickerEntryMode.calendar,
                         context: context,
-                        initialDate: date.state,
+                        initialDate: date.state(),
                         firstDate: DateTime(1950),
                         lastDate: DateTime(2050),
                       ) as DateTime;
@@ -174,7 +170,7 @@ class DateManger extends ReactiveStatelessWidget {
                     ),
                     onTap: () {
                       show.state = false;
-                      print(birth.state);
+                      print(birth.state());
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -213,7 +209,7 @@ class DateManger extends ReactiveStatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      '${DateTime.now().difference(date.state).inDays ~/ 365} years',
+                      '${DateTime.now().difference(date.state()).inDays ~/ 365} years',
                       softWrap: true,
                     ),
                   ),
@@ -225,22 +221,17 @@ class DateManger extends ReactiveStatelessWidget {
 }
 
 class InlineEditor extends ReactiveStatelessWidget {
-  InlineEditor(
-      {required this.data,
-      required this.persistKey,
-      required this.persistState});
+  InlineEditor({required this.data, required this.persistKey, required this.persistState});
   String data;
   String persistKey;
   String persistState;
   final controller = TextEditingController();
-  final edit = RM.inject(() => false,
-      debugPrintWhenNotifiedPreMessage: 'userNameState',
-      autoDisposeWhenNotUsed: false);
+  final edit = RM.inject(() => false, debugPrintWhenNotifiedPreMessage: 'userNameState', autoDisposeWhenNotUsed: false);
   @override
   Widget build(BuildContext context) {
     controller.text = data;
 
-    return edit.state
+    return edit.state()
         ? Column(
             children: [
               Padding(
@@ -266,8 +257,7 @@ class InlineEditor extends ReactiveStatelessWidget {
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: InkWell(
                           hoverColor: Colors.red,
-                          highlightColor:
-                              colors[Random().nextInt(colors.length)],
+                          highlightColor: colors[Random().nextInt(colors.length)],
                           focusColor: color,
                           splashColor: color,
                           borderRadius: BorderRadius.circular(20),
@@ -288,8 +278,7 @@ class InlineEditor extends ReactiveStatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: InkWell(
-                          highlightColor:
-                              colors[Random().nextInt(colors.length)],
+                          highlightColor: colors[Random().nextInt(colors.length)],
                           hoverColor: colors[Random().nextInt(colors.length)],
                           focusColor: color,
                           splashColor: color,

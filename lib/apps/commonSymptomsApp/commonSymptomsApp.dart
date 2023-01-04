@@ -83,7 +83,7 @@ class EachPatientWidget extends StatelessWidget {
       ),
       title: Column(
         children: [
-          showTextField.state
+          showTextField.state()
               ? TextFormField(
                   initialValue: eachPatient.name,
                   onFieldSubmitted: (value) {

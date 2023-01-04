@@ -108,7 +108,7 @@ final indexRM = RM.inject(
     return nextSnap;
   },
 );
-int get index => indexRM.state;
+int get index => indexRM.state();
 
 List<Widget> get pages => [
       MyDay(),
@@ -122,7 +122,7 @@ class Tasks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor.state,
+      backgroundColor: backgroundColor.state(),
       drawer: Drawer1(),
       appBar: AppBar(
         title: Text(
@@ -152,7 +152,7 @@ class MyDay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor.state,
+      backgroundColor: backgroundColor.state(),
       drawer: Drawer1(),
       appBar: AppBar1(
         title: Text(
@@ -167,7 +167,7 @@ class All extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor.state,
+      backgroundColor: backgroundColor.state(),
       drawer: Drawer1(),
       appBar: AppBar1(
         title: Text(
@@ -182,7 +182,7 @@ class FlaggedEmail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor.state,
+      backgroundColor: backgroundColor.state(),
       drawer: Drawer1(),
       appBar: AppBar1(
         title: Text(
@@ -199,7 +199,7 @@ class AppBar1 extends ReactiveStatelessWidget with PreferredSizeWidget {
   @override
   AppBar build(BuildContext context) {
     return AppBar(
-      backgroundColor: backgroundColor.state.shade300,
+      backgroundColor: backgroundColor.state().shade300,
       title: title,
       actions: [
         IconButton(onPressed: () {}, icon: Icon(Icons.one_k_outlined)),

@@ -110,7 +110,7 @@ class PrayerCounterWidget extends ReactiveStatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.all(padding),
-                child: show.state
+                child: show.state()
                     ? Column(
                         children: [
                           IconButton(
@@ -144,9 +144,9 @@ class PrayerCounterWidget extends ReactiveStatelessWidget {
                               ),
                             ),
                             IconButton(
-                              onPressed: count.state > 0
+                              onPressed: count.state() > 0
                                   ? () {
-                                      if (count.state > 0) {
+                                      if (count.state() > 0) {
                                         count.state--;
                                       } else {}
                                     }
@@ -162,7 +162,7 @@ class PrayerCounterWidget extends ReactiveStatelessWidget {
               )
             ],
           ),
-          show.state
+          show.state()
               ? Padding(
                   padding: EdgeInsets.all(padding),
                   child: TextFormField(
@@ -182,7 +182,7 @@ class PrayerCounterWidget extends ReactiveStatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(padding),
                         child: Text(
-                          count.state.toString(),
+                          count.state().toString(),
                           textScaleFactor: 2,
                         ),
                       ),

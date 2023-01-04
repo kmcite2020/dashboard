@@ -89,7 +89,7 @@ final addCustomerForm = RM.injectForm(
 void addCustomer() {
   String id = Uuid().v1();
   customers.state = [
-    ...customers.state,
+    ...customers.state(),
     CustomerModel(
       id: id,
       name: name.value,
@@ -100,7 +100,7 @@ void addCustomer() {
 
 void removeCustomers(String id) {
   customers.state = [
-    for (final customer in customers.state)
+    for (final customer in customers.state())
       if (customer.id != id) customer
   ];
 }

@@ -52,7 +52,7 @@ class ManagerDoctor {
       },
     ),
   );
-  List<Doctor> get doctors => doctorsRM.state;
+  List<Doctor> get doctors => doctorsRM.state();
 
   void deleteDocotor(Doctor doctor) {
     doctorsRM.state = [
@@ -63,7 +63,7 @@ class ManagerDoctor {
 
   void addDoctor() {
     doctorsRM.state = [
-      ...doctorsRM.state,
+      ...doctorsRM.state(),
       Doctor(
         userID: Uuid().v1(),
         name: nameController.text,

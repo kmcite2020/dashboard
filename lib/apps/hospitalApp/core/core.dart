@@ -65,7 +65,7 @@ bool isNoBedAvailable = false;
 // implement for new admissions if no space available
 /// ARCHIVED PATIENTS - FUNCTIONALITY
 final archivedPatientsRM = RM.inject<List<Patient>>(() => <Patient>[]);
-get archivedPatients => archivedPatientsRM.state;
+get archivedPatients => archivedPatientsRM.state();
 set addPatientToArchives(patient) {
   archivedPatientsRM.state = [
     ...archivedPatients,
@@ -75,7 +75,7 @@ set addPatientToArchives(patient) {
 
 set removePatientFromArchives(patient) {
   archivedPatientsRM.state = [
-    for (final eachArchivedPatient in archivedPatientsRM.state)
+    for (final eachArchivedPatient in archivedPatientsRM.state())
       if (eachArchivedPatient.id != patient.id) eachArchivedPatient
   ];
 }
@@ -119,7 +119,7 @@ final patientsRM = RM.inject<List<Patient>>(
     key: 'PATIENTS_1',
   ),
 );
-List<Patient> get patients => patientsRM.state;
+List<Patient> get patients => patientsRM.state();
 set patients(value) => patientsRM.state = value;
 void admitPatient() {
   patients = [

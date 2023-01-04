@@ -127,11 +127,11 @@ final productsRM = RM.inject<List<ProductModel>>(
     toJson: (state) => ProductModel.toListJson(state),
   ),
 );
-List<ProductModel> get products => productsRM.state;
+List<ProductModel> get products => productsRM.state();
 set products(value) => productsRM.state = value;
 void deleteProduct(String id) {
   productsRM.state = [
-    for (final product in productsRM.state)
+    for (final product in productsRM.state())
       if (product.id != id) product
   ];
 }
@@ -256,4 +256,4 @@ final currentWorthRM = RM.inject(
   },
   dependsOn: DependsOn({productsRM}),
 );
-String get currentWorth => currentWorthRM.state;
+String get currentWorth => currentWorthRM.state();

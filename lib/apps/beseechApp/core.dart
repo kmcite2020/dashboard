@@ -14,7 +14,7 @@ final _isInitialized = RM.inject<bool>(
   () => false,
   persist: () => PersistState(key: 'IS_INITIALIZED'),
 );
-bool get isInitialized => _isInitialized.state;
+bool get isInitialized => _isInitialized.state();
 set isInitialized(bool value) => _isInitialized.state = value;
 
 /// DATE OF BIRTH
@@ -67,10 +67,10 @@ final maghribRM = RM.inject<int>(() => 0, persist: () => PersistState(key: 'MAGH
 final ishaRM = RM.inject<int>(() => 0, persist: () => PersistState(key: 'ISHA'), autoDisposeWhenNotUsed: false);
 // ALL PRAYERS COUNT
 final sumOfAllPrayersRM = RM.inject<int>(
-  () => fajrRM.state + zuhrRM.state + asarRM.state + maghribRM.state + ishaRM.state,
+  () => fajrRM.state() + zuhrRM.state() + asarRM.state() + maghribRM.state() + ishaRM.state(),
   dependsOn: DependsOn(
     {fajrRM, zuhrRM, asarRM, maghribRM, ishaRM},
   ),
   autoDisposeWhenNotUsed: false,
 );
-int get sumOfAllPrayers => sumOfAllPrayersRM.state;
+int get sumOfAllPrayers => sumOfAllPrayersRM.state();
